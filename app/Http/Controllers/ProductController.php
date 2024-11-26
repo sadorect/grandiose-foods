@@ -3,24 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function show($slug)
+    public function index(Request $request)
     {
-        $product = Product::where('slug', $slug)
-            ->with(['category', 'images'])
-            ->firstOrFail();
+        $products = Product::query()
+            ->when($request->category, function ($query) use ($request) {
+                $query->where('category_id', $request->category);
+            })
+            ->when($request->search, function ($query) use ($request) {
+                $query->where('name', 'like', "%{$request->search}%");
+            })
+            ->where('is_active', true)
+            ->paginate(12);
 
+        $categories = Category::all();
+
+        return view('products.index', compact('products', 'categories'));
+    }
+
+    public function show(Product $product)
+    {
         return view('products.show', [
-            'product' => $product,
-            'related_products' => $product->getRelated(),
-        ])->with([
-            'meta_description' => $product->meta_description,
-            'og_title' => $product->name,
-            'og_description' => $product->meta_description,
-            'og_image' => $product->featured_image_url,
+            'product' => $product->load('category'),
+            'related_products' => Product::where('category_id', $product->category_id)
+                ->where('id', '!=', $product->id)
+                ->limit(4)
+                ->get()
         ]);
     }
 }

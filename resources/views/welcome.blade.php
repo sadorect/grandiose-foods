@@ -20,17 +20,15 @@
     <!-- Featured Categories -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 class="text-2xl font-bold text-lime-900 mb-8">Featured Categories</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
                 <img src="{{ asset('https://placehold.co/600x400/FEF9C3/65A30D?text=Grains+%26+Cereals') }}" alt="Grains & Cereals" class="w-full h-48 object-cover rounded-lg mb-4">
-
                 <h3 class="text-xl font-semibold text-lime-800 mb-2">Grains & Cereals</h3>
                 <p class="text-gray-600 mb-4">Premium quality wholesale grains for your business</p>
                 <a href="#" class="text-lime-600 hover:text-lime-700">View Products →</a>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
                 <img src="{{ asset('https://placehold.co/600x400/FEF9C3/65A30D?text=Dried+Fruits') }}" alt="Dried Fruits" class="w-full h-48 object-cover rounded-lg mb-4">
-
                 <h3 class="text-xl font-semibold text-lime-800 mb-2">Dried Fruits</h3>
                 <p class="text-gray-600 mb-4">Naturally dried premium fruits in bulk quantities</p>
                 <a href="#" class="text-lime-600 hover:text-lime-700">View Products →</a>
@@ -40,6 +38,12 @@
                 <h3 class="text-xl font-semibold text-lime-800 mb-2">Nuts & Seeds</h3>
                 <p class="text-gray-600 mb-4">Fresh and high-quality nuts for your needs</p>
                 <a href="#" class="text-lime-600 hover:text-lime-700">View Products →</a>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
+                <img src="{{ asset('https://placehold.co/600x400/FEF9C3/65A30D?text=Custom+Branding') }}" alt="Custom Branding" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-xl font-semibold text-lime-800 mb-2">Custom Branding</h3>
+                <p class="text-gray-600 mb-4">Professional packaging solutions for your brand</p>
+                <a href="#" class="text-lime-600 hover:text-lime-700">Learn More →</a>
             </div>
         </div>
     </section>

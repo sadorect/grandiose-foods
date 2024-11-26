@@ -14,41 +14,52 @@
         </ol>
     </nav>
 
-    <!-- Filters -->
-    <div class="grid grid-cols-4 gap-6">
-        <div class="col-span-1 bg-white p-4 rounded-lg shadow">
-            <h2 class="text-xl font-bold text-lime-900 mb-4">Filters</h2>
-            <!-- Filter form here -->
-        </div>
-
-        <!-- Product Grid -->
-        <div class="col-span-3">
-            <div class="grid grid-cols-3 gap-6">
-                @foreach($products as $product)
-                    <article class="bg-white rounded-lg shadow hover:shadow-lg transition">
-                        <img src="{{ $product->featured_image_url }}" 
-                             alt="{{ $product->name }}" 
-                             class="w-full h-48 object-cover rounded-t-lg">
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold text-lime-900">{{ $product->name }}</h3>
-                            <p class="text-gray-600 mt-2">{{ Str::limit($product->description, 100) }}</p>
-                            <div class="mt-4 flex justify-between items-center">
-                                <span class="text-xl font-bold text-lime-800">${{ $product->price }}</span>
-                                <a href="{{ route('products.show', $product->slug) }}" 
-                                   class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+    <!-- Filters and Search -->
+    <div class="flex justify-between items-center mb-8">
+        <div class="flex space-x-4">
+            <select name="category" class="rounded-lg border-gray-300">
+                <option value="">All Categories</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" @selected(request('category') == $category->id)>
+                        {{ $category->name }}
+                    </option>
                 @endforeach
-            </div>
-
-            <!-- Pagination -->
-            <div class="mt-8">
-                {{ $products->links() }}
-            </div>
+            </select>
         </div>
+        <div>
+            <input type="search" 
+                   name="search" 
+                   placeholder="Search products..." 
+                   class="rounded-lg border-gray-300"
+                   value="{{ request('search') }}">
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @foreach($products as $product)
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition">
+                <img src="{{ asset('images/products/' . $product->id . '.jpg') }}" 
+                     alt="{{ $product->name }}"
+                     class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-lime-900">{{ $product->name }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ $product->category->name }}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xl font-bold text-lime-800">${{ number_format($product->price, 2) }}</span>
+                        <a href="{{ route('products.show', $product) }}" 
+                           class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-8">
+        {{ $products->links() }}
     </div>
 </div>
 @endsection
