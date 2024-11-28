@@ -1,20 +1,17 @@
 <?php
+namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-/**
- * Controller class for managing public category-related functionality.
- */
-class CategoryController extends Controller
+class CategoryManagementController extends Controller
 {
     public function index()
     {
         $categories = Category::withCount('products')->get();
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     public function create()
@@ -33,14 +30,8 @@ class CategoryController extends Controller
 
         Category::create($validated);
 
-        return redirect()->route('categories.index')
+        return redirect()->route('admin.categories.index')
             ->with('success', 'Category created successfully');
-    }
-
-    public function show(Category $category)
-    {
-        $products = $category->products()->paginate(12);
-        return view('categories.show', compact('category', 'products'));
     }
 
     public function edit(Category $category)
@@ -59,7 +50,7 @@ class CategoryController extends Controller
 
         $category->update($validated);
 
-        return redirect()->route('categories.index')
+        return redirect()->route('admin.categories.index')
             ->with('success', 'Category updated successfully');
     }
 
@@ -67,7 +58,7 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index')
+        return redirect()->route('admin.categories.index')
             ->with('success', 'Category deleted successfully');
     }
 }
