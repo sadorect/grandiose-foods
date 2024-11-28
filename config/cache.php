@@ -30,7 +30,6 @@ return [
     |                    "redis", "dynamodb", "octane", "null"
     |
     */
-
     'stores' => [
 
         'array' => [
@@ -90,8 +89,12 @@ return [
             'driver' => 'octane',
         ],
 
-    ],
+        'rate_limiter' => [
+            'driver' => 'redis',
+            'connection' => 'rate_limiter',
+        ],
 
+    ],
     /*
     |--------------------------------------------------------------------------
     | Cache Key Prefix

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
@@ -14,10 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            AdminUserSeeder::class,
-            CategorySeeder::class,
-            ProductSeeder::class,
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@grandiosefoods.com',
+            'password' => bcrypt('password'),
+            'is_admin' => true
         ]);
     }
 }
