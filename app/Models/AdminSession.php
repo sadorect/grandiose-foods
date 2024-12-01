@@ -41,4 +41,13 @@ class AdminSession extends Model
             'last_active' => now(),
         ]);
     }
+
+
+    public function getBrowser()
+    {
+        $agent = new Agent();
+        $agent->setUserAgent($this->user_agent);
+        return $agent->browser() . ' ' . $agent->version($agent->browser());
+    }
+
 }
