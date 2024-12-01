@@ -13,7 +13,10 @@ use App\Http\Controllers\Admin\CategoryManagementController;
 Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');;
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'changePassword'])->name('profile.password');
+
+    // Authentication
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     
     // Categories

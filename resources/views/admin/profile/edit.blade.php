@@ -63,5 +63,47 @@
             </div>
         </form>
     </div>
+
+
+
+<div class="mt-10 bg-white rounded-lg shadow-md">
+  <div class="p-6 border-b">
+      <h2 class="text-xl font-semibold">Change Password</h2>
+  </div>
+
+  <form action="{{ route('admin.profile.password') }}" method="POST" class="p-6 space-y-6">
+      @csrf
+      @method('PUT')
+
+      <div>
+          <label class="block text-sm font-medium text-gray-700">Current Password</label>
+          <input type="password" name="current_password" 
+                 class="mt-1 block w-full rounded-md border-gray-300">
+      </div>
+
+      <div>
+          <label class="block text-sm font-medium text-gray-700">New Password</label>
+          <input type="password" name="password" 
+                 class="mt-1 block w-full rounded-md border-gray-300">
+      </div>
+
+      <div>
+          <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+          <input type="password" name="password_confirmation" 
+                 class="mt-1 block w-full rounded-md border-gray-300">
+      </div>
+
+      <div class="flex justify-end">
+          <button type="submit" 
+                  class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+              Update Password
+          </button>
+      </div>
+  </form>
 </div>
+
+</div>
+
+
+
 @endsection
