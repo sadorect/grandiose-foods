@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\Models\AdminActivityLog;
+use App\Traits\LogsAdminActivity;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    use LogsAdminActivity;
+
     public function edit()
     {
+        $user = auth()->user();
+        $activities = AdminActivityLog::where('user_id', $user->id)
+            ->latest()
+            ->take(10)
+            ->get();
+
         return view('admin.profile.edit', [
-            'user' => auth()->user()
+            'user' => $user,
+            'activities' => $activities
         ]);
     }
 
@@ -34,6 +45,10 @@ class ProfileController extends Controller
         }
 
         $user->update($validated);
+        
+        $this->logActivity('profile_updated', [
+            'updated_fields' => array_keys($validated)
+        ]);
 
         return back()->with('success', 'Profile updated successfully');
     }
@@ -53,7 +68,8 @@ class ProfileController extends Controller
             'password' => Hash::make($validated['password'])
         ]);
 
+        $this->logActivity('password_changed');
+
         return back()->with('success', 'Password changed successfully');
     }
-
 }
