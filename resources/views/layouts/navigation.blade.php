@@ -36,19 +36,19 @@
 
                 <!-- Authentication Links -->
                 @auth
-                    @if(Route::has('dashboard'))
-                        <a href="{{ route('dashboard') }}" class="text-lime-900 hover:text-lime-700">Dashboard</a>
+                    @if(Route::has('admin.dashboard'))
+                        <a href="{{ route('admin.dashboard') }}" class="text-lime-900 hover:text-lime-700">Dashboard</a>
                     @endif
                     
-                    @if(Route::has('logout'))
-                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @if(Route::has('admin.logout'))
+                        <form method="POST" action="{{ route('admin.logout') }}" class="inline">
                             @csrf
                             <button type="submit" class="text-lime-900 hover:text-lime-700">Logout</button>
                         </form>
                     @endif
                 @else
-                    @if(Route::has('login'))
-                        <a href="{{ route('login') }}" class="bg-lime-600 text-white px-4 py-2 rounded-lg hover:bg-lime-700">Login</a>
+                    @if(Route::has('admin.login'))
+                        <a href="{{ route('admin.login') }}" class="bg-lime-600 text-white px-4 py-2 rounded-lg hover:bg-lime-700">Login</a>
                     @endif
                 @endauth
             </div>
@@ -90,8 +90,8 @@
                 </form>
             @endif
         @else
-            @if(Route::has('login'))
-                <a href="{{ route('login') }}" class="block py-2 px-4 text-lime-900 hover:bg-yellow-300">Login</a>
+            @if(Route::has('admin.login'))
+                <a href="{{ route('admin.login') }}" class="block py-2 px-4 text-lime-900 hover:bg-yellow-300">Login</a>
             @endif
         @endauth
     </div>

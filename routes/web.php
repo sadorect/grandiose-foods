@@ -21,9 +21,9 @@ Route::resource('categories', CategoryController::class);
 Route::get('/categories', [PublicCategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');
 
-Route::middleware(AdminLoginRateLimiter::class)->group(function () {
+//Route::middleware(AdminLoginRateLimiter::class)->group(function () {
     Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('admin/login', [AdminAuthController::class, 'login']);
-});
+//});
 
 

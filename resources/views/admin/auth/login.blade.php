@@ -19,13 +19,13 @@
                     <div class="mb-6">
                         <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
                         <input type="email" name="email" id="email" 
-                               class="w-full border-gray-300 rounded-lg" required autofocus>
+                               class="w-full border-gray-300 rounded-lg bg-yellow-200" required autofocus>
                     </div>
 
                     <div class="mb-6">
                         <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
                         <input type="password" name="password" id="password" 
-                               class="w-full border-gray-300 rounded-lg" required>
+                               class="w-full border-gray-300 rounded-lg bg-yellow-200" required>
                     </div>
 
                     <button type="submit" 

@@ -11,7 +11,7 @@
             <input type="text" 
                    name="name" 
                    id="name" 
-                   class="w-full border-gray-300 rounded-lg @error('name') border-red-500 @enderror"
+                   class="w-full border-gray-300 rounded-lg bg-yellow-300 @error('name') border-red-500 @enderror focus:border-lime-600"
                    value="{{ old('name') }}"
                    required>
             @error('name')
@@ -24,7 +24,7 @@
             <textarea name="description" 
                       id="description" 
                       rows="4" 
-                      class="w-full border-gray-300 rounded-lg @error('description') border-red-500 @enderror"
+                      class="w-full border-gray-300 rounded-lg bg-yellow-300 focus:border-lime-600 @error('description') border-red-500 @enderror"
                       required>{{ old('description') }}</textarea>
             @error('description')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
