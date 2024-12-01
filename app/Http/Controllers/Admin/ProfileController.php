@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdminSession;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\AdminActivityLog;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class ProfileController extends Controller
 {
     use LogsAdminActivity;
+   
 
     public function edit()
     {
@@ -72,4 +74,32 @@ class ProfileController extends Controller
 
         return back()->with('success', 'Password changed successfully');
     }
+
+
+
+
+public function sessions()
+{
+    $sessions = AdminSession::where('user_id', auth()->id())
+        ->latest('last_active')
+        ->get();
+
+    return view('admin.profile.sessions', compact('sessions'));
+}
+
+public function terminateSession($id)
+{
+    $session = AdminSession::where('user_id', auth()->id())
+        ->findOrFail($id);
+        
+    $session->delete();
+    
+    $this->logActivity('session_terminated', [
+        'session_id' => $id,
+        'device' => $session->device
+    ]);
+
+    return back()->with('success', 'Session terminated successfully');
+}
+
 }

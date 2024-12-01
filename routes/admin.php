@@ -15,6 +15,8 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'changePassword'])->name('profile.password');
+    Route::get('/profile/sessions', [ProfileController::class, 'sessions'])->name('profile.sessions');
+    Route::delete('/profile/sessions/{session}', [ProfileController::class, 'terminateSession'])->name('profile.sessions.terminate');
 
     // Authentication
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');

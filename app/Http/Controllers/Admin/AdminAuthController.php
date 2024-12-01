@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\AdminSession;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
@@ -31,6 +32,8 @@ class AdminAuthController extends Controller
             if (Auth::user()->is_admin) {
                 RateLimiter::clear($this->throttleKey());
                 $request->session()->regenerate();
+
+                AdminSession::createFromRequest($request);
                 return redirect()->intended(route('admin.dashboard'));
             }
             
