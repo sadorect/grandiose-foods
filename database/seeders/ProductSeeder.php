@@ -8,67 +8,117 @@ use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        $products = [
-            [
-                'category_id' => 1,
-                'name' => 'Premium Basmati Rice',
-                'description' => 'Long-grain aromatic rice perfect for various cuisines',
-                'price' => 45.99,
-                'min_order_quantity' => 25,
-                'stock_quantity' => 1000,
-                'sku' => 'GRN-BSM-001',
-                'specifications' => [
-                    'Origin' => 'India',
-                    'Grade' => 'Premium',
-                    'Package Size' => '25kg'
-                ]
-            ],
-            [
-                'category_id' => 2,
-                'name' => 'Organic Dried Mango',
-                'description' => 'Naturally sweet dried mango slices with no added sugar',
-                'price' => 28.99,
-                'min_order_quantity' => 10,
-                'stock_quantity' => 500,
-                'sku' => 'DFR-MNG-001',
-                'specifications' => [
-                    'Origin' => 'Philippines',
-                    'Type' => 'Organic',
-                    'Package Size' => '5kg'
-                ]
-            ],
-            [
-                'category_id' => 3,
-                'name' => 'Raw Cashew Nuts',
-                'description' => 'Premium quality whole cashew nuts',
-                'price' => 89.99,
-                'min_order_quantity' => 15,
-                'stock_quantity' => 300,
-                'sku' => 'NUT-CSH-001',
-                'specifications' => [
-                    'Origin' => 'Vietnam',
-                    'Grade' => 'W320',
-                    'Package Size' => '10kg'
-                ]
-            ]
-        ];
+        // Grains & Cereals
+        $this->createProduct([
+            'category_id' => 1,
+            'name' => 'Premium Basmati Rice',
+            'description' => 'Long-grain aromatic basmati rice, aged for 2 years. Perfect for restaurants and food service.',
+            'sku' => 'GRN-BSM-001',
+            'base_price' => 89.99,
+            'measurement_type' => 'weight',
+            'min_order_quantity' => 25,
+            'stock_quantity' => 500,
+            'variants' => json_encode([
+                ['size' => 25, 'unit' => 'kg', 'price' => 89.99, 'stock' => 500]
+            ]),
+            'specifications' => json_encode([
+                'Origin' => 'India',
+                'Grain Length' => '7.5mm',
+                'Aging' => '24 months',
+                'Grade' => 'Premium A'
+            ])
+        ]);
 
-        foreach ($products as $product) {
-            Product::create([
-                'category_id' => $product['category_id'],
-                'name' => $product['name'],
-                'slug' => Str::slug($product['name']),
-                'description' => $product['description'],
-                'price' => $product['price'],
-                'min_order_quantity' => $product['min_order_quantity'],
-                'stock_quantity' => $product['stock_quantity'],
-                'sku' => $product['sku'],
-                'specifications' => $product['specifications'],
-                'is_featured' => true,
-                'is_active' => true
-            ]);
-        }
+        $this->createProduct([
+            'category_id' => 1,
+            'name' => 'Organic Quinoa',
+            'description' => 'Premium organic white quinoa. High in protein and essential amino acids.',
+            'sku' => 'GRN-QNA-002',
+            'base_price' => 120.00,
+            'measurement_type' => 'weight',
+            'min_order_quantity' => 20,
+            'stock_quantity' => 300,
+            'variants' => json_encode([
+                ['size' => 20, 'unit' => 'kg', 'price' => 120.00, 'stock' => 300]
+            ]),
+            'specifications' => json_encode([
+                'Origin' => 'Peru',
+                'Type' => 'White Quinoa',
+                'Organic' => 'Yes',
+                'Grade' => 'A'
+            ])
+        ]);
+
+        // Nuts & Seeds
+        $this->createProduct([
+            'category_id' => 2,
+            'name' => 'Raw Cashews',
+            'description' => 'Premium whole raw cashews. Perfect for snacking and food processing.',
+            'sku' => 'NUT-CSH-001',
+            'base_price' => 250.00,
+            'measurement_type' => 'weight',
+            'min_order_quantity' => 10,
+            'stock_quantity' => 200,
+            'variants' => json_encode([
+                ['size' => 10, 'unit' => 'kg', 'price' => 250.00, 'stock' => 200]
+            ]),
+            'specifications' => json_encode([
+                'Origin' => 'Vietnam',
+                'Grade' => 'W320',
+                'Process' => 'Raw',
+                'Size' => 'Large'
+            ])
+        ]);
+
+        // Dried Fruits
+        $this->createProduct([
+            'category_id' => 3,
+            'name' => 'Turkish Apricots',
+            'description' => 'Premium dried Turkish apricots. Naturally sweet and preservative-free.',
+            'sku' => 'DRF-APR-001',
+            'base_price' => 145.00,
+            'measurement_type' => 'weight',
+            'min_order_quantity' => 15,
+            'stock_quantity' => 250,
+            'variants' => json_encode([
+                ['size' => 15, 'unit' => 'kg', 'price' => 145.00, 'stock' => 250]
+            ]),
+            'specifications' => json_encode([
+                'Origin' => 'Turkey',
+                'Type' => 'Natural',
+                'Sulfur' => 'No',
+                'Size' => 'Large'
+            ])
+        ]);
+
+        // Spices & Seasonings
+        $this->createProduct([
+            'category_id' => 4,
+            'name' => 'Black Peppercorns',
+            'description' => 'Premium Tellicherry black peppercorns. Bold aroma and complex flavor.',
+            'sku' => 'SPC-BPP-001',
+            'base_price' => 180.00,
+            'measurement_type' => 'weight',
+            'min_order_quantity' => 10,
+            'stock_quantity' => 300,
+            'variants' => json_encode([
+                ['size' => 10, 'unit' => 'kg', 'price' => 180.00, 'stock' => 300]
+            ]),
+            'specifications' => json_encode([
+                'Origin' => 'India',
+                'Grade' => 'TGSEB',
+                'Size' => '4.75mm',
+                'Type' => 'Tellicherry'
+            ])
+        ]);
+    }
+
+    private function createProduct($data)
+    {
+        $data['slug'] = Str::slug($data['name']);
+        $data['is_active'] = true;
+        Product::create($data);
     }
 }

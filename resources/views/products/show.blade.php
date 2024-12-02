@@ -27,11 +27,14 @@
             <h1 class="text-3xl font-bold text-lime-900 mb-4">{{ $product->name }}</h1>
             <p class="text-gray-600 mb-4">{{ $product->description }}</p>
             
+            <!-- Variants and Pricing -->
             <div class="bg-yellow-50 p-4 rounded-lg mb-6">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-gray-600">Price per unit:</span>
-                    <span class="text-2xl font-bold text-lime-800">${{ number_format($product->price, 2) }}</span>
-                </div>
+                @foreach(json_decode($product->variants, true) as $variant)
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-600">{{ $variant['size'] }} {{ $variant['unit'] }}:</span>
+                        <span class="text-2xl font-bold text-lime-800">${{ number_format($variant['price'], 2) }}</span>
+                    </div>
+                @endforeach
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-gray-600">Minimum Order:</span>
                     <span>{{ $product->min_order_quantity }} units</span>
@@ -65,7 +68,7 @@
                 <div class="mt-8">
                     <h2 class="text-xl font-semibold text-lime-900 mb-4">Specifications</h2>
                     <dl class="space-y-2">
-                        @foreach($product->specifications as $key => $value)
+                        @foreach(json_decode($product->specifications, true) as $key => $value)
                             <div class="flex justify-between">
                                 <dt class="text-gray-600">{{ $key }}:</dt>
                                 <dd>{{ $value }}</dd>
@@ -76,6 +79,9 @@
             @endif
         </div>
     </div>
+
+
+
 
     <!-- Related Products -->
     @if($related_products->count() > 0)

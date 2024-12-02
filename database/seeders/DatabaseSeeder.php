@@ -15,11 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@grandiosefoods.com',
-            'password' => bcrypt('password'),
-            'is_admin' => true
+
+        $this->call([
+            //CategorySeeder::class,
+            ProductSeeder::class,
+            //AdminUserSeeder::class
         ]);
+       
+    
     }
 }
