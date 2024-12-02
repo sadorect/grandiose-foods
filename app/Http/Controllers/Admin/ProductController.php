@@ -13,7 +13,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->latest()->paginate(20);
-        return view('admin.products.index', compact('products'));
+        $categories = Category::all();
+
+        return view('admin.products.index', compact('products', 'categories'));
     }
 
     public function create()
@@ -37,11 +39,16 @@ class ProductController extends Controller
             'variants.*.price' => 'required|numeric|min:0',
             'variants.*.stock' => 'required|integer|min:0',
             'min_order_quantity' => 'required|integer|min:1',
-            'specifications' => 'nullable|array'
+            'specifications' => 'nullable|json',
+            'stock_quantity' => 'required|integer|min:0',
         ]);
-
+        $validated['variants'] = json_encode($validated['variants']);
         $validated['slug'] = Str::slug($validated['name']);
-        
+
+        if ($request->specifications) {
+          $validated['specifications'] = json_decode($request->specifications, true);
+        }
+
         Product::create($validated);
 
         return redirect()->route('admin.products.index')
@@ -51,6 +58,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
+        $product->load('category'); // Eager load the category relationship
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
@@ -69,12 +77,14 @@ class ProductController extends Controller
             'variants.*.price' => 'required|numeric|min:0',
             'variants.*.stock' => 'required|integer|min:0',
             'min_order_quantity' => 'required|integer|min:1',
-            'specifications' => 'nullable|array'
+            'specifications' => 'nullable|json',
+            'stock_quantity' => 'required|integer|min:0',
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
+        $validated['variants'] = json_encode($validated['variants']);
+    $validated['slug'] = Str::slug($validated['name']);
 
-        $product->update($validated);
+    $product->update($validated);
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product updated successfully');

@@ -17,12 +17,14 @@ class Product extends Model
         'base_price',
         'is_featured',
         'is_active',
+        'variants',
+        'stock_quantity',
         'specifications',
         'weight_variants'
     ];
 
     protected $casts = [
-        'specifications' => 'array',
+        'specifications' => 'json',
         'weight_variants' => 'array',
         'is_featured' => 'boolean',
         'is_active' => 'boolean'
