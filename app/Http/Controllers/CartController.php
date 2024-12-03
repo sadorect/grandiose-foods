@@ -42,4 +42,22 @@ class CartController extends Controller
         
         return redirect()->back()->with('success', 'Product removed from cart');
     }
+
+
+    public function updateQuantity(Request $request, Product $product)
+    {
+        $request->validate([
+            'quantity' => ['required', 'integer', 'min:' . $product->min_order_quantity]
+        ]);
+
+        $cart = session()->get('cart', []);
+        $cart[$product->id]['quantity'] = $request->quantity;
+        session()->put('cart', $cart);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Quantity updated'
+        ]);
+    }
+
 }

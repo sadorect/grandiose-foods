@@ -46,22 +46,31 @@
             </div>
 
             <!-- Add to Cart Form -->
-            <form action="{{ route('cart.add', $product) }}" method="POST" class="space-y-4">
-                @csrf
-                <div>
-                    <label for="quantity" class="block text-gray-700 mb-2">Quantity:</label>
-                    <input type="number" 
-                           name="quantity" 
-                           id="quantity" 
-                           min="{{ $product->min_order_quantity }}"
-                           value="{{ $product->min_order_quantity }}"
-                           class="w-full rounded-lg border-gray-300">
+            <div class="grid grid-cols-2 gap-4">
+                <form action="{{ route('cart.add', $product) }}" method="POST">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="quantity" class="block text-gray-700 mb-2">Quantity:</label>
+                        <input type="number" 
+                               name="quantity" 
+                               id="quantity" 
+                               min="{{ $product->min_order_quantity }}"
+                               value="{{ $product->min_order_quantity }}"
+                               class="w-full rounded-lg border-gray-300">
+                    </div>
+                    <button type="submit" 
+                            class="w-full bg-lime-600 text-white py-3 px-6 rounded-lg hover:bg-lime-700 transition">
+                        Add to Cart
+                    </button>
+                </form>
+                
+                <div class="flex items-end">
+                    <a href="{{ route('cart.index') }}" 
+                       class="w-full bg-white text-lime-600 py-3 px-6 rounded-lg border border-lime-600 hover:bg-lime-50 transition text-center">
+                        Go to Cart
+                    </a>
                 </div>
-                <button type="submit" 
-                        class="w-full bg-lime-600 text-white py-3 px-6 rounded-lg hover:bg-lime-700 transition">
-                    Add to Cart
-                </button>
-            </form>
+            </div>
 
             <!-- Specifications -->
             @if($product->specifications)
