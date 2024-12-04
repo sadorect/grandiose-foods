@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Order;
+use App\Models\ShippingAddress;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -21,7 +24,8 @@ class User extends Authenticatable
         'phone',
         'avatar',
         'email_notifications',
-        'is_admin'
+        'is_admin',
+        'company_name'
     ];
 
     /**
@@ -48,5 +52,15 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->is_admin;
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(ShippingAddress::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

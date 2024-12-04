@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminLoginRateLimiter;
 use App\Http\Controllers\PublicCategoryController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\ShippingAddressController;
 
 
 
@@ -18,7 +19,14 @@ use App\Http\Controllers\Admin\AdminAuthController;
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Shipping Address Routes
+    Route::get('/profile/addresses', [ShippingAddressController::class, 'index'])->name('profile.addresses.index');
+    Route::post('/profile/addresses', [ShippingAddressController::class, 'store'])->name('profile.addresses.store');
+    Route::get('/profile/addresses/{address}/edit', [ShippingAddressController::class, 'edit'])->name('profile.addresses.edit');
+    Route::patch('/profile/addresses/{address}', [ShippingAddressController::class, 'update'])->name('profile.addresses.update');
+    Route::delete('/profile/addresses/{address}', [ShippingAddressController::class, 'destroy'])->name('profile.addresses.destroy');
+
 });
 
 Route::get('/', function () {
