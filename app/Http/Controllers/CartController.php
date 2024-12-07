@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $cartItems = session()->get('cart', []);
-        $products = Product::whereIn('id', array_keys($cartItems))->get();
-        
+        $cart = Cart::firstOrCreate(['user_id' => auth()->id()]);
+        $cartItems = $cart->items()->with('product')->get();
+        $products = $cartItems->pluck('product');
+
         return view('cart.index', compact('cartItems', 'products'));
+        
     }
 
     public function add(Request $request, Product $product)
@@ -21,28 +24,37 @@ class CartController extends Controller
             'quantity' => ['required', 'integer', 'min:' . $product->min_order_quantity]
         ]);
 
-        $cart = session()->get('cart', []);
+        $cart = Cart::firstOrCreate(['user_id' => auth()->id()]);
         
-        $cart[$product->id] = [
-            'quantity' => $request->quantity,
-            'price' => $product->base_price,
-            'added_at' => now()
-        ];
+        $cart->items()->updateOrCreate(
+            ['product_id' => $product->id],
+            [
+                'quantity' => $request->quantity,
+                'price' => $product->base_price
+            ]
+        );
         
-        session()->put('cart', $cart);
-        
-        return redirect()->back()->with('success', 'Product added to cart');
+        // Return JSON response for AJAX requests
+            if($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product added to cart',
+                    'cartCount' => $cart->items()->count()
+                ]);
+            }
+        return redirect()->back()->with('success', '<< Product added to cart.');
     }
 
     public function remove(Product $product)
     {
-        $cart = session()->get('cart', []);
-        unset($cart[$product->id]);
-        session()->put('cart', $cart);
+        $cart = Cart::where('user_id', auth()->id())->first();
+        
+        if ($cart) {
+            $cart->items()->where('product_id', $product->id)->delete();
+        }
         
         return redirect()->back()->with('success', 'Product removed from cart');
     }
-
 
     public function updateQuantity(Request $request, Product $product)
     {
@@ -50,14 +62,16 @@ class CartController extends Controller
             'quantity' => ['required', 'integer', 'min:' . $product->min_order_quantity]
         ]);
 
-        $cart = session()->get('cart', []);
-        $cart[$product->id]['quantity'] = $request->quantity;
-        session()->put('cart', $cart);
+        $cart = Cart::where('user_id', auth()->id())->first();
+        
+        if ($cart) {
+            $cart->items()->where('product_id', $product->id)
+                ->update(['quantity' => $request->quantity]);
+        }
 
         return response()->json([
             'success' => true,
             'message' => 'Quantity updated'
         ]);
     }
-
 }

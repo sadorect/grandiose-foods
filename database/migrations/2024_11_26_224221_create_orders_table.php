@@ -19,8 +19,8 @@ class CreateOrdersTable extends Migration
             $table->decimal('subtotal', 10, 2);
             $table->decimal('tax', 10, 2);
             $table->decimal('total', 10, 2);
-            $table->text('shipping_address');
-            $table->text('billing_address');
+            $table->json('shipping_address');
+            $table->json('billing_address');
             $table->string('status')->default('pending');
             $table->string('payment_status');
             $table->string('payment_method');

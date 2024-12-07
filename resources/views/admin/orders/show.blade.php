@@ -61,7 +61,7 @@
             <div>
                 <h3 class="font-semibold mb-2">Shipping Address</h3>
                 <div class="text-gray-600">
-                    {{ $order->shipping_address['address'] }}<br>
+                    {{ $order->shipping_address->address }}<br>
                     {{ $order->shipping_address['city'] }}, {{ $order->shipping_address['state'] }}<br>
                     {{ $order->shipping_address['postal_code'] }}<br>
                     {{ $order->shipping_address['country'] }}

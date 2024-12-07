@@ -19,7 +19,8 @@ use App\Http\Controllers\ShippingAddressController;
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
+    Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+    
     // Shipping Address Routes
     Route::get('/profile/addresses', [ShippingAddressController::class, 'index'])->name('profile.addresses.index');
     Route::post('/profile/addresses', [ShippingAddressController::class, 'store'])->name('profile.addresses.store');
@@ -48,17 +49,22 @@ Route::get('/categories/{category:slug}', [PublicCategoryController::class, 'sho
 
 
 
-Route::post('/cart/add/{product:slug}', [CartController::class, 'add'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::delete('/cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
-Route::patch('/cart/update/{product}', [CartController::class, 'updateQuantity'])->name('cart.update');
+Route::middleware('auth')->group(function () {
+    // Cart Routes
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::delete('/cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::patch('/cart/{product}/quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::delete('/cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    // Order Routes
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{order}/reorder', [OrderController::class, 'reorder'])->name('orders.reorder');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
-Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-Route::get('/orders/{order}/confirmation', [OrderController::class, 'confirmation'])->name('orders.confirmation');
+    // Checkout Routes
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+});
 
 
 

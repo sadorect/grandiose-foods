@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Add this at the top of the page -->
+@if(session('success'))
+    <div id="notification" class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+        {{ session('success') }}
+    </div>
+@endif
+
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Breadcrumbs -->
     <nav class="flex mb-8" aria-label="Breadcrumb">
@@ -118,4 +125,45 @@
         </div>
     @endif
 </div>
+
+<!-- Add this JavaScript -->
+<script>
+    document.getElementById('addToCartForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                quantity: document.getElementById('quantity').value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                // Update cart count
+                const cartCountElement = document.querySelector('[data-cart-count]');
+        if(cartCountElement) {
+            cartCountElement.textContent = data.cartCount;
+            cartCountElement.style.display = data.cartCount > 0 ? '' : 'none';
+        }
+                
+                // Show notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-1/4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-50 shadow-lg';
+                notification.textContent = data.message;
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        });
+    });
+    </script>
 @endsection

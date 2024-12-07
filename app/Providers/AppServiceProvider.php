@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,7 +21,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
-            $cartCount = count(session()->get('cart', []));
+            if (auth()->check()) {
+                $cartCount = Cart::where('user_id', auth()->id())
+                                ->withCount('items')
+                                ->first()
+                                ->items_count ?? 0;
+            } else {
+                $cartCount = 0;
+            }
             $view->with('cartCount', $cartCount);
         });
     }

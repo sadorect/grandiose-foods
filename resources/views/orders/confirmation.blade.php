@@ -19,7 +19,7 @@
                     <h3 class="font-medium text-gray-700 mb-2">Shipping Information</h3>
                     <p class="text-gray-600">{{ $order->company_name }}</p>
                     <p class="text-gray-600">{{ $order->contact_name }}</p>
-                    <p class="text-gray-600">{{ $order->shipping_address }}</p>
+                    <p class="text-gray-600">{{ $order->shipping_address ?? 'address' }}</p>
                     <p class="text-gray-600">{{ $order->email }}</p>
                     <p class="text-gray-600">{{ $order->phone }}</p>
                 </div>

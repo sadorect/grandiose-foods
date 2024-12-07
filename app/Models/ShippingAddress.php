@@ -14,7 +14,8 @@ class ShippingAddress extends Model
         'street',
         'city',
         'state',
-        'zip'
+        'zip',
+        'shipping_address_id'
     ];
 
     public function user(): BelongsTo

@@ -32,7 +32,7 @@
                     <div x-show="activeTab === 'profile'">
                         @include('profile.partials.profile-form')
                     </div>
-                    <div x-show="activeTab === 'addresses'">
+                    <div id="shipping-addresses" x-show="activeTab === 'addresses'">
                         @include('profile.partials.shipping-addresses')
                     </div>
                     <div x-show="activeTab === 'orders'">

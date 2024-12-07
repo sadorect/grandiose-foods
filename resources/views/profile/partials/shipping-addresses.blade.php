@@ -7,13 +7,13 @@
     </div>
     @endif
         <!-- Existing Addresses -->
-        <div class="space-y-4">
+        <div id="shipping-addresses" class="space-y-4">
             @forelse(auth()->user()->addresses ?? [] as $address)
                 <div class="bg-yellow-50 border border-lime-200 rounded-lg p-4">
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="font-medium text-lime-900">{{ $address->label }}</h3>
-                            <p class="text-gray-600">{{ $address->street }}</p>
+                            <p class="text-gray-600">{{ $address->street ?? 'N/A' }}</p>
                             <p class="text-gray-600">{{ $address->city }}, {{ $address->state }} {{ $address->zip }}</p>
                         </div>
                         <div class="flex space-x-3">

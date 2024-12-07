@@ -30,7 +30,7 @@ class ShippingAddressController extends Controller
   
       $address = auth()->user()->addresses()->create($validated);
   
-      return back()->with('status', 'Address saved successfully');
+      return redirect()->back()->withFragment('shipping-addresses')->with('status', 'Address saved successfully');
   }
   
 
@@ -57,7 +57,7 @@ class ShippingAddressController extends Controller
     public function destroy(ShippingAddress $address)
     {
         $address->delete();
-        return back()->with('status', 'Address removed successfully');
+        return redirect()->back()->withFragment('shipping-addresses')->with('status', 'Address removed successfully');
     }
     
 }

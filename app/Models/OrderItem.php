@@ -15,6 +15,7 @@ class OrderItem extends Model
         'quantity',
         'size',
         'measurement_unit',
+        'unit_price',
         'subtotal'
     ];
 

@@ -55,4 +55,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function orders()
+{
+    $orders = auth()->user()->orders()->with('items')->latest()->paginate(10);
+    return view('profile.orders.index', compact('orders'));
+}
+
 }
