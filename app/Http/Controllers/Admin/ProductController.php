@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Exports\ProductsExport;
+use App\Imports\ProductsImport;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -96,4 +100,42 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully');
     }
+
+
+    public function import(Request $request)
+    {
+        try {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,csv'
+            ]);
+
+            Log::info('Starting import');
+            Excel::import(new ProductsImport, $request->file('file'));
+            Log::info('Import completed');
+            
+            return back()->with('success', 'Products imported successfully');
+        } catch (\Exception $e) {
+            Log::error('Import failed:', ['error' => $e->getMessage()]);
+            return back()->with('error', 'Import failed: ' . $e->getMessage());
+        }
+    }
+    public function export()
+    {
+        return Excel::download(new ProductsExport, 'grandiose-products.xlsx');
+    }
+
+    public function updateImages(Request $request, Product $product)
+    {
+        $request->validate([
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        if ($request->hasFile('images')) {
+            foreach($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                $product->images()->create(['path' => $path]);
+            }
+        }
+    }
+
 }

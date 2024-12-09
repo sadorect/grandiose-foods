@@ -26,6 +26,9 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     
     // Products
     Route::resource('products', ProductController::class);
+    Route::post('admin/products/import', [ProductController::class, 'import'])->name('products.import');
+    Route::get('admin/products/export', [ProductController::class, 'export'])->name('products.export');
+
     
     // Orders
     Route::resource('orders', OrderController::class)->except(['create', 'store', 'edit', 'destroy']);

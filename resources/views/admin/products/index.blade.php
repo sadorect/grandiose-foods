@@ -4,10 +4,39 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Products</h2>
-        <a href="{{ route('admin.products.create') }}" 
-           class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
-            Add New Product
-        </a>
+        <div class="flex space-x-4">
+            <!-- Export Button -->
+            <a href="{{ route('admin.products.export') }}" 
+               class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                Export Products
+            </a>
+            
+            <!-- Import Button -->
+            <button onclick="document.getElementById('importForm').classList.toggle('hidden')"
+                    class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                Import Products
+            </button>
+            
+            <a href="{{ route('admin.products.create') }}" 
+               class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                Add New Product
+            </a>
+        </div>
+    </div>
+
+    <!-- Import Form (Hidden by default) -->
+    <div id="importForm" class="hidden mb-6 p-4 bg-white rounded-lg shadow">
+        <form action="{{ route('admin.products.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="flex items-center space-x-4">
+                <input type="file" name="file" accept=".xlsx,.csv" required
+                       class="border rounded-md p-2">
+                <button type="submit" 
+                        class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                    Upload
+                </button>
+            </div>
+        </form>
     </div>
 
     <div class="bg-white rounded-lg shadow-md">

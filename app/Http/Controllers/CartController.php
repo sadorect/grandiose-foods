@@ -42,7 +42,7 @@ class CartController extends Controller
                     'cartCount' => $cart->items()->count()
                 ]);
             }
-        return redirect()->back()->with('success', '<< Product added to cart.');
+        return redirect()->back()->with('success', $product->name.' added to cart.');
     }
 
     public function remove(Product $product)
