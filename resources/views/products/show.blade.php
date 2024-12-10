@@ -127,7 +127,13 @@
                         <div class="p-4">
                             <h3 class="text-lg font-semibold text-lime-900">{{ $related->name }}</h3>
                             <div class="flex justify-between items-center mt-2">
-                                <span class="text-xl font-bold text-lime-800">${{ number_format($related->price, 2) }}</span>
+                                <span class="text-xl font-bold text-lime-800">
+                                    @php
+                                        $variants = json_decode($related->variants, true);
+                                        $basePrice = $variants[0]['price'] ?? $related->base_price;
+                                    @endphp
+                                    ${{ number_format($basePrice, 2) }}
+                                </span>
                                 <a href="{{ route('products.show', $related) }}" 
                                    class="text-lime-600 hover:text-lime-700">
                                     View →
