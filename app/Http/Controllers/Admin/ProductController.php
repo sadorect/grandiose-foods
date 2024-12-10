@@ -1,19 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Traits\ConvertToWebp;
 use App\Exports\ProductsExport;
 use App\Imports\ProductsImport;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    use ConvertToWebp;
+
     public function index()
     {
         $products = Product::with('category')->latest()->paginate(20);
@@ -30,6 +34,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|unique:products|max:255',
@@ -126,16 +131,40 @@ class ProductController extends Controller
 
     public function updateImages(Request $request, Product $product)
     {
-        $request->validate([
-            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
-        ]);
+        try {
+            $request->validate([
+                'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+            ]);
 
-        if ($request->hasFile('images')) {
-            foreach($request->file('images') as $image) {
-                $path = $image->store('products', 'public');
-                $product->images()->create(['path' => $path]);
+            if ($request->hasFile('images')) {
+                foreach($request->file('images') as $image) {
+                    Log::info('Processing image:', ['name' => $image->getClientOriginalName()]);
+                    $path = $this->convertToWebp($image, 'products');
+                    $product->images()->create(['path' => $path]);
+                }
             }
+
+            return redirect()->back()->with('success', 'Images uploaded successfully');
+        } catch (\Exception $e) {
+            Log::error('Image upload error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error uploading images: ' . $e->getMessage());
         }
     }
+
+    public function destroyImage(Product $product, ProductImage $image)
+    {
+        try {
+            // Delete file from storage
+            Storage::disk('public')->delete($image->path);
+            // Delete database record
+            $image->delete();
+            
+            return back()->with('success', 'Image deleted successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error deleting image');
+        }
+    }
+    
+    
 
 }

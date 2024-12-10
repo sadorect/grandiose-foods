@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Category;
+use App\Models\ProductImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -34,4 +35,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function images()
+{
+    return $this->hasMany(ProductImage::class);
+}
+
 }

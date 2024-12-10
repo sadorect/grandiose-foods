@@ -23,11 +23,26 @@
     <!-- Product Details -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Product Image -->
-        <div>
-            <img src="{{ asset('images/products/' . $product->id . '.jpg') }}" 
-                 alt="{{ $product->name }}"
-                 class="w-full rounded-lg shadow-lg">
-        </div>
+       <!-- Update image section -->
+            <div x-data="{ mainImage: '{{ $product->images->first() ? Storage::url($product->images->first()->path) : asset('images/placeholder.jpg') }}' }">
+                <!-- Main Image -->
+                <img :src="mainImage" 
+                    alt="{{ $product->name }}"
+                    class="w-full rounded-lg shadow-lg mb-4">
+                
+                <!-- Thumbnails -->
+                @if($product->images->count() > 1)
+                    <div class="grid grid-cols-4 gap-4">
+                        @foreach($product->images as $image)
+                            <img src="{{ Storage::url($image->path) }}" 
+                                alt="{{ $product->name }}"
+                                class="w-full h-24 object-cover rounded-lg cursor-pointer hover:opacity-75"
+                                @click="mainImage = '{{ Storage::url($image->path) }}'">
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
 
         <!-- Product Info -->
         <div>
@@ -63,7 +78,7 @@
                                id="quantity" 
                                min="{{ $product->min_order_quantity }}"
                                value="{{ $product->min_order_quantity }}"
-                               class="w-full rounded-lg border-gray-300">
+                               class="w-full rounded-lg border-gray-300 bg-yellow-200">
                     </div>
                     <button type="submit" 
                             class="w-full bg-lime-600 text-white py-3 px-6 rounded-lg hover:bg-lime-700 transition">
@@ -106,7 +121,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 @foreach($related_products as $related)
                     <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition">
-                        <img src="{{ asset('images/products/' . $related->id . '.jpg') }}" 
+                        <img src="{{ $product->images->first() ? Storage::url($product->images->first()->path) : asset('images/placeholder.jpg') }}" 
                              alt="{{ $related->name }}"
                              class="w-full h-48 object-cover rounded-t-lg">
                         <div class="p-4">

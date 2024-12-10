@@ -136,6 +136,54 @@
                 </button>
             </div>
         </form>
+   
+
+        <!-- Add before upload form -->
+<div class="grid grid-cols-4 gap-4 mb-4">
+    @foreach($product->images as $image)
+        <div class="relative">
+            <img src="{{ Storage::url($image->path) }}" 
+                 alt="Product image" 
+                 class="rounded-lg">
+            <form action="{{ route('admin.products.images.destroy', [$product, $image]) }}" 
+                  method="POST" 
+                  class="absolute top-2 right-2">
+                @csrf
+                @method('DELETE')
+                <button type="submit" 
+                        class="bg-red-500 text-white p-1 rounded-full hover:bg-red-600">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    @endforeach
+</div>
+
+        <!-- Add this after your existing product form -->
+    <div class="mt-6 p-6 bg-white rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold mb-4">Product Images</h3>
+        
+        <form action="{{ route('admin.products.images.update', $product) }}" 
+            method="POST" 
+            enctype="multipart/form-data"
+            class="space-y-4">
+            @csrf
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Upload Images</label>
+                <input type="file" 
+                    name="images[]" 
+                    multiple 
+                    accept="image/*"
+                    class="mt-1 block w-full">
+            </div>
+            <button type="submit" 
+                    class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                Upload Images
+            </button>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

@@ -39,14 +39,21 @@
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($products as $product)
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition">
-                <img src="{{ asset('images/products/' . $product->id . '.jpg') }}" 
-                     alt="{{ $product->name }}"
-                     class="w-full h-48 object-cover rounded-t-lg">
+                <!-- Replace existing image tag in product card -->
+                <img src="{{ $product->images->first() ? Storage::url($product->images->first()->path) : asset('images/placeholder.jpg') }}" 
+                alt="{{ $product->name }}"
+                class="w-full h-48 object-cover rounded-t-lg">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-lime-900">{{ $product->name }}</h3>
                     <p class="text-gray-600 text-sm mb-2">{{ $product->category->name }}</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-lime-800">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-xl font-bold text-lime-800">
+                            @php
+                                $variants = json_decode($product->variants, true);
+                                $basePrice = $variants[0]['price'] ?? $product->base_price;
+                            @endphp
+                            ${{ number_format($basePrice, 2) }}
+                        </span>
                         <a href="{{ route('products.show', $product) }}" 
                            class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
                             View Details

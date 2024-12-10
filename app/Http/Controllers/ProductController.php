@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::query()
+        $products = Product::with('images')
             ->when($request->category, function ($query) use ($request) {
                 $query->where('category_id', $request->category);
             })
@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return view('products.show', [
-            'product' => $product->load('category'),
+            'product' => $product->load('images', 'category'),
             'related_products' => Product::where('category_id', $product->category_id)
                 ->where('id', '!=', $product->id)
                 ->limit(4)

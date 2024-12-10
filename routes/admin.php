@@ -28,6 +28,10 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     Route::resource('products', ProductController::class);
     Route::post('admin/products/import', [ProductController::class, 'import'])->name('products.import');
     Route::get('admin/products/export', [ProductController::class, 'export'])->name('products.export');
+    Route::post('admin/products/{product}/images', [ProductController::class, 'updateImages'])
+    ->name('products.images.update');
+    Route::delete('admin/products/{product}/images/{image}', [ProductController::class, 'destroyImage'])
+    ->name('products.images.destroy');
 
     
     // Orders
