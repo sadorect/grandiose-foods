@@ -61,10 +61,10 @@
             <div>
                 <h3 class="font-semibold mb-2">Shipping Address</h3>
                 <div class="text-gray-600">
-                    {{ $order->shipping_address->address }}<br>
-                    {{ $order->shipping_address['city'] }}, {{ $order->shipping_address['state'] }}<br>
-                    {{ $order->shipping_address['postal_code'] }}<br>
-                    {{ $order->shipping_address['country'] }}
+               
+                    {{ $order->shipping_address_city ?? 'city' }}, {{ $order->shipping_address_state ?? 'state' }}<br>
+                    {{ $order->shipping_address_postal_code ?? 'zip' }}<br>
+                    {{ $order->shipping_address_country  ?? 'country'}}
                 </div>
             </div>
             <div>
@@ -77,4 +77,13 @@
         </div>
     </div>
 </div>
+    <!-- Add this after the main order details div -->
+<div class="mt-6 flex space-x-4">
+    <a href="{{ route('admin.users.edit', $order->user_id) }}" 
+       class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
+        ← Back to User
+    </a>
+</div>
+
+
 @endsection
