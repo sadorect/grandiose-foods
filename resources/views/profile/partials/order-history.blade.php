@@ -64,8 +64,9 @@
                 <div class="p-4 bg-white border-t border-lime-200">
                     <div class="flex justify-between items-center">
                         <div class="text-sm text-gray-600">
-                            <p>Shipping to: {{ json_decode($order->shipping_address)->street ?? 'N/A' }}, 
-                               {{ json_decode($order->shipping_address)->city ?? 'N/A' }}</p>
+                            <p>Shipping to:  {{ $order->shipping_address_city ?? 'city' }}, {{ $order->shipping_address_state ?? 'state' }}<br>
+                                {{ $order->shipping_address_postal_code ?? 'zip' }}<br>
+                                {{ $order->shipping_address_country  ?? 'country'}}</p>
                         </div>
                         <div class="flex space-x-4">
                             <button onclick="window.location='{{ route('orders.show', $order) }}'"
