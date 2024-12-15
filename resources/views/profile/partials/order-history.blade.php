@@ -74,9 +74,11 @@
                                 View Details
                             </button>
                             <button onclick="reorderItems({{ $order->id }})"
-                                    class="text-lime-600 hover:text-lime-700">
-                                Reorder
-                            </button>
+                                type="button"
+                                class="text-lime-600 hover:text-lime-700">
+                            Reorder
+                        </button>
+                        
                         </div>
                     </div>
                 </div>
@@ -95,17 +97,26 @@
 
 <script>
 function reorderItems(orderId) {
+    console.log('Starting reorder request for order:', orderId);
     fetch(`/orders/${orderId}/reorder`, {
         method: 'POST',
         headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Raw response:', response);
+        return response.json();
+    })
     .then(data => {
+        console.log('Parsed data:', data);
         if (data.success) {
             window.location.href = '/cart';
         }
-    });
+    })
+    .catch(error => console.log('Error:', error));
 }
+
 </script>

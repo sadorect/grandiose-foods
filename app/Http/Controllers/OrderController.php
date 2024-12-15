@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Log;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Cart;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -73,16 +74,24 @@ class OrderController extends Controller
     }
 
     public function reorder(Order $order)
-    {
+{
+    try {
         $cart = Cart::firstOrCreate(['user_id' => auth()->id()]);
         
         foreach($order->items as $item) {
             $cart->items()->create([
                 'product_id' => $item->product_id,
-                'quantity' => $item->quantity
+                'quantity' => $item->quantity,
+                'price' => $item->unit_price
             ]);
         }
 
         return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        Log::error('Reorder failed: ' . $e->getMessage());
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
+    
 }
