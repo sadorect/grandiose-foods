@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -24,6 +25,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Validate reCAPTCHA token
+    $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . config('services.recaptcha.secret_key') . '&response=' . $request->input('g-recaptcha-response'));
+    $recaptcha = json_decode($recaptcha);
+    
+    Log::info('Login reCAPTCHA Validation:', [
+        'score' => $recaptcha->score,
+        'action' => $recaptcha->action,
+        'timestamp' => $recaptcha->challenge_ts,
+        'hostname' => $recaptcha->hostname
+    ]);
         $request->authenticate();
 
         $request->session()->regenerate();

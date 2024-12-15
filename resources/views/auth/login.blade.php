@@ -31,7 +31,7 @@
                     </a>
                 @endif
             </div>
-
+            <input type="hidden" name="g-recaptcha-response" id="recaptcha-token">
             <button type="submit" class="w-full bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
                 Log in
             </button>
@@ -42,4 +42,15 @@
             </p>
         </form>
     </div>
+
+    <!-- reCAPTCHA v3 script -->
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'login'})
+                .then(function(token) {
+                    document.getElementById('recaptcha-token').value = token;
+                });
+        });
+    </script>
 </x-guest-layout>

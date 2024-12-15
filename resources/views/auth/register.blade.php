@@ -32,7 +32,8 @@
                     class="mt-1 block w-full rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500 focus:ring-lime-500" />
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
-
+            <!-- Add before the Register button -->
+            <input type="hidden" name="g-recaptcha-response" id="recaptcha-token">
             <button type="submit" class="w-full bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
                 Register
             </button>
@@ -43,4 +44,13 @@
             </p>
         </form>
     </div>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'register'})
+                .then(function(token) {
+                    document.getElementById('recaptcha-token').value = token;
+                });
+        });
+    </script>
 </x-guest-layout>
