@@ -41,7 +41,6 @@
     </main>
 
     @include('layouts.footer')
-
     <!-- Schema.org Organization Data -->
     <script type="application/ld+json">
     {
