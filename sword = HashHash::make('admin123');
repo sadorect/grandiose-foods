@@ -1,0 +1,9 @@
+[90m= [39m[34;4mIlluminate\Database\Eloquent\Collection[39;24m {#5239
+    [34mall[39m: [
+      [34;4mApp\Models\User[39;24m {#5237
+        [34memail[39m: "[32madmin@grandiosefoods.com[39m",
+        [34mname[39m: "[32mAdmin User[39m",
+      },
+    ],
+  }
+
