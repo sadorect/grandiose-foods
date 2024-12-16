@@ -24,5 +24,9 @@
            class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.users.*') ? 'bg-lime-700' : '' }}">
             <span>Users</span>
         </a>
+        <a href="{{ route('admin.settings') }}" 
+           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.settings') ? 'bg-lime-700' : '' }}">
+            <span>Settings</span>
+        </a>
     </nav>
 </div>
