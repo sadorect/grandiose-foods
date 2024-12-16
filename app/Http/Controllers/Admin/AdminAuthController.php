@@ -17,38 +17,32 @@ class AdminAuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $this->checkTooManyFailedAttempts();
+{
+    $this->checkTooManyFailedAttempts();
 
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-           // 'recaptcha_token' => 'required'
-        ]);
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+        'g-recaptcha-response' => 'required'
+    ]);
 
-        //$this->validateReCaptcha($credentials['recaptcha_token']);
-
-        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            if (Auth::user()->is_admin) {
-                RateLimiter::clear($this->throttleKey());
-                $request->session()->regenerate();
-
-                AdminSession::createFromRequest($request);
-                return redirect()->intended(route('admin.dashboard'));
-            }
+    if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+        if (Auth::user()->is_admin) {
+            RateLimiter::clear($this->throttleKey());
+            $request->session()->regenerate();
             
-            Auth::logout();
-            $this->incrementFailedAttempts();
-            throw ValidationException::withMessages([
-                'email' => 'You do not have admin access.',
-            ]);
+            return response()->json(['success' => true]);
         }
-
+        
+        Auth::logout();
         $this->incrementFailedAttempts();
-        throw ValidationException::withMessages([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        return response()->json(['error' => 'You do not have admin access.']);
     }
+
+    $this->incrementFailedAttempts();
+    return response()->json(['error' => 'Invalid credentials']);
+}
+
 
     private function validateReCaptcha($token)
     {
