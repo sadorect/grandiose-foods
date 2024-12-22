@@ -13,6 +13,12 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryManagementController;
 
 
+Route::middleware(['auth', AdminAccess::class])
+    ->prefix('admin')  // This adds the first 'admin'
+    ->name('admin.')
+    ->group(function () {
+    Route::resource('categories', CategoryManagementController::class);
+});
 
 
 Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')->group(function () {
@@ -27,7 +33,7 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     
     // Categories
-    Route::resource('categories', CategoryManagementController::class);
+    //Route::resource('categories', CategoryManagementController::class);
     
     // Products
     Route::resource('products', ProductController::class);

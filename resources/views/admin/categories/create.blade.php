@@ -6,6 +6,8 @@
 <div class="bg-white rounded-lg shadow-md">
     <form action="{{ route('admin.categories.store') }}" method="POST" class="p-6">
         @csrf
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
         <div class="mb-4">
             <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
             <input type="text" 

@@ -40,7 +40,9 @@ Route::get('/', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
-Route::resource('categories', CategoryController::class);
+
+    Route::resource('categories', CategoryController::class);
+
 
 Route::get('/categories', [PublicCategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');

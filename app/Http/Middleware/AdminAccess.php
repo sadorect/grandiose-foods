@@ -45,8 +45,9 @@ class AdminAccess
 
     private function requiresRecaptcha(Request $request): bool
     {
-        $sensitiveActions = ['POST', 'PUT', 'PATCH', 'DELETE'];
-        return in_array($request->method(), $sensitiveActions);
+        //$sensitiveActions = ['POST', 'PUT', 'PATCH', 'DELETE'];
+        //return in_array($request->method(), $sensitiveActions);
+        return $request->is('admin/login') && $request->isMethod('POST');
     }
 
     private function verifyRecaptcha(Request $request)
