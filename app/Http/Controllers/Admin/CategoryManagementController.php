@@ -26,7 +26,7 @@ class CategoryManagementController extends Controller
         $validated = $request->validate([
             'name' => 'required|unique:categories|max:255',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -53,7 +53,7 @@ class CategoryManagementController extends Controller
         $validated = $request->validate([
             'name' => 'required|unique:categories,name,'.$category->id.'|max:255',
             'description' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
