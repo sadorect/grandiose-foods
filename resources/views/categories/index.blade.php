@@ -7,7 +7,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         @foreach($categories as $category)
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition">
-                <img src="{{ asset('images/categories/' . $category->slug . '.jpg') }}" 
+                <img src="{{ $category->image }}" 
                      alt="{{ $category->name }}"
                      class="w-full h-48 object-cover rounded-t-lg">
                 <div class="p-6">
