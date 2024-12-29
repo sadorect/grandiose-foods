@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="bg-white rounded-lg shadow-md">
-    <form action="{{ route('admin.categories.store') }}" method="POST" class="p-6">
+    <form action="{{ route('admin.categories.store') }}" method="POST" class="p-6" enctype="multipart/form-data">
         @csrf
-<meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <div class="mb-4">
             <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
@@ -19,6 +19,22 @@
             @error('name')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="image" class="block text-gray-700 font-medium mb-2">Category Image</label>
+            <input type="file" 
+                   name="image" 
+                   id="image" 
+                   class="w-full border-gray-300 rounded-lg @error('image') border-red-500 @enderror"
+                   accept="image/*"
+                   onchange="previewImage(this)">
+            @error('image')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+            <div id="imagePreview" class="mt-4 hidden">
+                <img src="" alt="Preview" class="max-w-xs rounded-lg shadow-md">
+            </div>
         </div>
 
         <div class="mb-6">
@@ -45,4 +61,25 @@
         </div>
     </form>
 </div>
+@push('scripts')
+    
+
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('imagePreview');
+    const previewImg = preview.querySelector('img');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            preview.classList.remove('hidden');
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+@endpush
 @endsection
