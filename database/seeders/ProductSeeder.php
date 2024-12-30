@@ -383,11 +383,11 @@ class ProductSeeder extends Seeder
                         'description' => 'Original ' . $product['name'] . ' - Wholesale pack',
                         'sku' => Str::upper(substr(Str::slug($product['name']), 0, 3)) . '-' . rand(100, 999),
                         'base_price' => $product['price'],
-                        'measurement_type' => 'unit',
+                        'measurement_type' => 'weight',
                         'min_order_quantity' => 24,
                         'stock_quantity' => rand(200, 400),
                         'variants' => json_encode([
-                            ['size' => 24, 'unit' => 'pieces', 'price' => $product['price'], 'stock' => rand(200, 400)]
+                            ['size' => 24, 'weight' => 'kg', 'price' => $product['price'], 'stock' => rand(200, 400)]
                         ]),
                         'specifications' => json_encode([
                             'Brand' => 'Original',
