@@ -21,7 +21,7 @@
             <div>
                 <h4 class="text-lg font-semibold text-lime-900 mb-4">Contact</h4>
                 <ul class="space-y-2">
-                    <li class="text-lime-800">Phone: (555) 123-4567</li>
+                    <li class="text-lime-800">Phone: +1 443 290 4982</li>
                     <li class="text-lime-800">Email: info@grandiosefoods.com</li>
                 </ul>
             </div>

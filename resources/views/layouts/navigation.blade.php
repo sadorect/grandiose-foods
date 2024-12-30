@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
                         Categories
                     </x-nav-link>
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" >
+                        Contact
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -25,7 +28,7 @@
             <div class="flex items-center space-x-4">
                 @auth
                     <!-- User dropdown -->
-                    <!-- User dropdown -->
+                   
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <div class="relative" x-data="{ open: false }">
                         <div>

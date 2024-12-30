@@ -51,7 +51,7 @@
         "logo": "{{ asset('images/logo.png') }}",
         "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+1-555-123-4567",
+            "telephone": "+1 443 290 4982",
             "contactType": "customer service"
         }
     }
