@@ -38,8 +38,8 @@
 
     <div class="bg-white rounded-lg shadow-md">
         <div class="p-6">
-            <form action="{{ route('admin.products.index') }}" method="GET" class="flex justify-between mb-4">
-                <div class="flex space-x-4">
+            <form action="{{ route('admin.products.index') }}" method="GET" class="mb-4">
+                <div class="flex space-x-4 items-center">
                     <select name="category" class="rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500" onchange="this.form.submit()">
                         <option value="">All Categories</option>
                         @foreach($categories as $category)
@@ -55,7 +55,17 @@
                         <option value="0" @selected(request('status') == '0')>Inactive</option>
                     </select>
 
-                    <div class="flex items-center">
+                    <select name="action" form="mass-action-form" class="rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500">
+                        <option value="">Select Action</option>
+                        <option value="delete">Delete Selected</option>
+                        <option value="deactivate">Deactivate Selected</option>
+                        <option value="activate">Activate Selected</option>
+                    </select>
+                    <button type="submit" form="mass-action-form" class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                        Apply
+                    </button>
+
+                    <div class="flex items-center ml-auto">
                         <input type="search" 
                                name="search"
                                value="{{ request('search') }}"
@@ -70,18 +80,6 @@
 
             <form id="mass-action-form" action="{{ route('admin.products.mass-action') }}" method="POST">
                 @csrf
-                <div class="mb-4 flex items-center space-x-4">
-                    <select name="action" class="rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500">
-                        <option value="">Select Action</option>
-                        <option value="delete">Delete Selected</option>
-                        <option value="deactivate">Deactivate Selected</option>
-                        <option value="activate">Activate Selected</option>
-                    </select>
-                    <button type="submit" class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
-                        Apply
-                    </button>
-                </div>
-
                 <table class="min-w-full">
                     <thead>
                         <tr class="border-b">
