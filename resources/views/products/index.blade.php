@@ -17,14 +17,17 @@
     <!-- Filters and Search -->
     <div class="flex justify-between items-center mb-8">
         <div class="flex space-x-4">
-            <select name="category" class="rounded-lg border-gray-300">
-                <option value="">All Categories</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" @selected(request('category') == $category->id)>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
+            <form method="GET" action="{{ route('products.index') }}" class="flex items-center space-x-4">
+                <select name="category" class="rounded-lg bg-yellow-200 border-gray-300" onchange="this.form.submit()">
+                    <option value="">All Categories</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" @selected(request('category') == $category->id)>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
+            
         </div>
         <div>
             <input type="search" 
