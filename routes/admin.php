@@ -43,6 +43,8 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     ->name('products.images.update');
     Route::delete('admin/products/{product}/images/{image}', [ProductController::class, 'destroyImage'])
     ->name('products.images.destroy');
+    Route::post('products/mass-action', [ProductController::class, 'massAction'])->name('products.mass-action');
+
 
     
     // Orders

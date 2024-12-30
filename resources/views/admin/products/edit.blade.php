@@ -99,18 +99,34 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700">Variants</label>
                 <div class="space-y-2">
+                    
                     @foreach(json_decode($product->variants) as $index => $variant)
                         <div class="grid grid-cols-4 gap-4">
-                            <input type="number" name="variants[{{ $index }}][size]" value="{{ $variant->size }}" 
+                            <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Package Size</label>
+                            <input type="number" name="variants[{{ $index }}][size]" value="{{ $variant->size }}" placeholder="e.g. 25"
                                    class="rounded-md bg-yellow-200 border-gray-300 focus:border-lime-500">
-                            <input type="text" name="variants[{{ $index }}][unit]" value="{{ $variant->unit }}" 
+                                </div>
+                                <div>
+                        
+                                   <label class="block text-sm font-medium text-gray-700 mb-1">Unit</label>
+                            <input type="text" name="variants[{{ $index }}][unit]" value="{{ $variant->unit }}" placeholder="e.g. kg"
                                    class="rounded-md bg-yellow-200 border-gray-300 focus:border-lime-500">
-                            <input type="number" step="0.01" name="variants[{{ $index }}][price]" value="{{ $variant->price }}" 
+                                </div>
+                                <div> 
+                                   <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>  
+                            <input type="number" step="0.01" name="variants[{{ $index }}][price]" value="{{ $variant->price }}" placeholder="e.g. 99.99" 
                                    class="rounded-md bg-yellow-200 border-gray-300 focus:border-lime-500">
-                            <input type="number" name="variants[{{ $index }}][stock]" value="{{ $variant->stock }}" 
+
+                                </div>
+                                <div>
+                                   <label class="block text-sm font-medium text-gray-700 mb-1">Stock</label>         
+                            <input type="number" name="variants[{{ $index }}][stock]" value="{{ $variant->stock }}" placeholder="e.g. 100"
                                    class="rounded-md bg-yellow-200 border-gray-300 focus:border-lime-500">
+                                </div>
                         </div>
                     @endforeach
+               
                 </div>
                 @error('variants')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -120,7 +136,15 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700">Specifications</label>
                 <textarea name="specifications" rows="3" 
-                          class="mt-1 block w-full rounded-md bg-yellow-200 border-gray-300 focus:border-lime-500">{{ json_encode($product->specifications, JSON_PRETTY_PRINT) }}</textarea>
+                          class="mt-1 block w-full rounded-md bg-yellow-200 border-gray-300 focus:border-lime-500" 
+                          placeholder='{
+                            "Origin": "Nigeria",
+                            "Grade": "Premium A",
+                            "Processing": "Natural",
+                            "Quality": "Export Grade",
+                            "Storage": "Keep in cool, dry place"
+                        }'
+                        >{{ json_encode($product->specifications, JSON_PRETTY_PRINT) }}</textarea>
                 @error('specifications')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror

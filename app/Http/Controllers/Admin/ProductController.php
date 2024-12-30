@@ -18,13 +18,32 @@ class ProductController extends Controller
 {
     use ConvertToWebp;
 
-    public function index()
-    {
-        $products = Product::with('category')->latest()->paginate(20);
-        $categories = Category::all();
+    public function index(Request $request)
+{
+    $query = Product::query();
 
-        return view('admin.products.index', compact('products', 'categories'));
+    if ($request->filled('category')) {
+        $query->where('category_id', $request->category);
     }
+
+    if ($request->filled('status')) {
+        $query->where('is_active', $request->status);
+    }
+
+    if ($request->filled('search')) {
+        $query->where(function($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('sku', 'like', '%' . $request->search . '%')
+              ->orWhere('description', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    $products = $query->with('category')->paginate(10);
+    $categories = Category::all();
+
+    return view('admin.products.index', compact('products', 'categories'));
+}
+
 
     public function create()
     {
@@ -165,6 +184,27 @@ class ProductController extends Controller
         }
     }
     
-    
+    public function massAction(Request $request)
+{
+    $selectedProducts = $request->input('selected_products', []);
+    $action = $request->input('action');
+
+    switch($action) {
+        case 'delete':
+            Product::whereIn('id', $selectedProducts)->delete();
+            return redirect()->route('admin.products.index')->with('success', 'Selected products deleted');
+            
+        case 'deactivate':
+            Product::whereIn('id', $selectedProducts)->update(['is_active' => false]);
+            return redirect()->route('admin.products.index')->with('success', 'Selected products deactivated');
+            
+        case 'activate':
+            Product::whereIn('id', $selectedProducts)->update(['is_active' => true]);
+            return redirect()->route('admin.products.index')->with('success', 'Selected products activated');
+    }
+
+    return redirect()->route('admin.products.index')->with('error', 'No action selected');
+}
+
 
 }
