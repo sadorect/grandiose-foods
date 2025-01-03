@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CategoryManagementController;
 
 
@@ -58,4 +59,9 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     // Settings routes
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
     Route::post('/settings/rate-limit', [SettingsController::class, 'updateRateLimit'])->name('settings.rate-limit');
+
+    // Contact Messages
+    Route::resource('contact-messages', ContactMessageController::class);
+    Route::post('contact-messages/{message}/reply', [ContactMessageController::class, 'reply'])
+         ->name('contact-messages.reply');
 });

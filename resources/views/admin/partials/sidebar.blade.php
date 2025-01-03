@@ -24,6 +24,18 @@
            class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.users.*') ? 'bg-lime-700' : '' }}">
             <span>Users</span>
         </a>
+        <a href="{{ route('admin.contact-messages.index') }}" 
+           class="flex items-center justify-between text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.contact-messages.*') ? 'bg-lime-700' : '' }}">
+            <span>Messages</span>
+            @php
+                $unreadCount = \App\Models\ContactMessage::where('status', 0)->count();
+            @endphp
+            @if($unreadCount > 0)
+                <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {{ $unreadCount }}
+                </span>
+            @endif
+        </a>
         <a href="{{ route('admin.settings') }}" 
            class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.settings') ? 'bg-lime-700' : '' }}">
             <span>Settings</span>

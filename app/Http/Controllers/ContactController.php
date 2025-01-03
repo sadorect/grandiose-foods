@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
+use App\Mail\ContactFormMail;
+use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -22,7 +23,8 @@ class ContactController extends Controller
             'message' => 'required|string',
             'g-recaptcha-response' => 'recaptcha',
         ]);
-
+$validated['content'] = $validated['message'];
+        ContactMessage::create($validated);
         // Send email
         Mail::to('info@grandiosefoods.com')->send(new ContactFormMail($validated));
 
