@@ -8,8 +8,7 @@ trait ConvertToWebp
 {
     public function convertToWebp($image, $path)
     {
-        $img = Image::make($image);
-        $filename = uniqid() . '.webp';
+        $img = $image;        $filename = uniqid() . '.webp';
         $fullPath = storage_path('app/public/' . $path . '/' . $filename);
         
         $img->encode('webp', 80)->save($fullPath);
