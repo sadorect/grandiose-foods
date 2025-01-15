@@ -109,9 +109,9 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center">
-                                <img src="{{ asset('images/products/' . $product->id . '.jpg') }}" 
-                                     alt="{{ $product->name }}"
-                                     class="h-10 w-10 object-cover rounded-lg mr-3">
+                                <img src="{{ $product->images->first() ? Storage::url($product->images->first()->path) : asset('images/placeholder.jpg') }}" 
+     alt="{{ $product->name }}"
+     class="h-10 w-10 object-cover rounded-lg">
                                 <span>{{ $product->name }}</span>
                             </div>
                         </td>
