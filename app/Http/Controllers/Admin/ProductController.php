@@ -119,7 +119,13 @@ class ProductController extends Controller
     }
 
     public function destroy(Product $product)
-    {
+    { 
+        $product->cartItems()->delete();
+        // Delete related order items first
+        $product->orderItems()->delete();
+        // Delete related product images
+        $product->images()->delete();
+        // Delete the product
         $product->delete();
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully');
@@ -149,17 +155,19 @@ class ProductController extends Controller
     }
 
     public function updateImages(Request $request, Product $product)
-    {
+    { 
         try {
+            
             $request->validate([
                 'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
             ]);
-
+            
             if ($request->hasFile('images')) {
                 foreach($request->file('images') as $image) {
                     Log::info('Processing image:', ['name' => $image->getClientOriginalName()]);
                     $path = $this->convertToWebp($image, 'products');
                     $product->images()->create(['path' => $path]);
+                    Log::info('Image saved to storage:', ['path' => $path]);
                 }
             }
 

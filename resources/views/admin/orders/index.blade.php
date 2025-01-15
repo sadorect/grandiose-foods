@@ -48,6 +48,17 @@
                     <td class="px-6 py-4">
                         <a href="{{ route('admin.orders.show', $order) }}" 
                            class="text-lime-600 hover:text-lime-900">View Details</a>
+                           <!--form action="" 
+                           method="POST" 
+                           class="inline">
+                         @csrf
+                         @method('DELETE')
+                         <button type="submit" 
+                                 class="text-red-600 hover:text-red-900"
+                                 onclick="return confirm('Are you sure you want to delete this order?')">
+                             Delete
+                         </button>
+                     </form-->
                     </td>
                 </tr>
             @endforeach

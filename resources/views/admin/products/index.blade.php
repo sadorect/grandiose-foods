@@ -38,6 +38,7 @@
 
     <div class="bg-white rounded-lg shadow-md">
         <div class="p-6">
+            <!-- Search and Filter Form -->
             <form action="{{ route('admin.products.index') }}" method="GET" class="mb-4">
                 <div class="flex space-x-4 items-center">
                     <select name="category" class="rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500" onchange="this.form.submit()">
@@ -55,16 +56,6 @@
                         <option value="0" @selected(request('status') == '0')>Inactive</option>
                     </select>
 
-                    <select name="action" form="mass-action-form" class="rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500">
-                        <option value="">Select Action</option>
-                        <option value="delete">Delete Selected</option>
-                        <option value="deactivate">Deactivate Selected</option>
-                        <option value="activate">Activate Selected</option>
-                    </select>
-                    <button type="submit" form="mass-action-form" class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
-                        Apply
-                    </button>
-
                     <div class="flex items-center ml-auto">
                         <input type="search" 
                                name="search"
@@ -78,66 +69,80 @@
                 </div>
             </form>
 
-            <form id="mass-action-form" action="{{ route('admin.products.mass-action') }}" method="POST">
+            <!-- Mass Action Form -->
+            <form id="mass-action-form" action="{{ route('admin.products.mass-action') }}" method="POST" class="mb-4">
                 @csrf
-                <table class="min-w-full">
-                    <thead>
-                        <tr class="border-b">
-                            <th class="px-6 py-3 text-left">
-                                <input type="checkbox" id="select-all" class="rounded border-gray-300">
-                            </th>
-                            <th class="px-6 py-3 text-left">Product</th>
-                            <th class="px-6 py-3 text-left">Category</th>
-                            <th class="px-6 py-3 text-left">SKU</th>
-                            <th class="px-6 py-3 text-right">Price</th>
-                            <th class="px-6 py-3 text-center">Stock</th>
-                            <th class="px-6 py-3 text-center">Status</th>
-                            <th class="px-6 py-3 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $product)
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="px-6 py-4">
-                                <input type="checkbox" name="selected_products[]" value="{{ $product->id }}" class="product-checkbox rounded border-gray-300">
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <img src="{{ asset('images/products/' . $product->id . '.jpg') }}" 
-                                         alt="{{ $product->name }}"
-                                         class="h-10 w-10 object-cover rounded-lg mr-3">
-                                    <span>{{ $product->name }}</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">{{ $product->category->name }}</td>
-                            <td class="px-6 py-4">{{ $product->sku }}</td>
-                            <td class="px-6 py-4 text-right">${{ number_format($product->base_price, 2) }}</td>
-                            <td class="px-6 py-4 text-center">{{ $product->stock_quantity }}</td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="px-2 py-1 text-xs rounded-full {{ $product->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $product->is_active ? 'Active' : 'Inactive' }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <a href="{{ route('admin.products.edit', $product) }}" 
-                                   class="text-lime-600 hover:text-lime-700 mr-3">Edit</a>
-                                <form action="{{ route('admin.products.destroy', $product) }}" 
-                                      method="POST" 
-                                      class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" 
-                                            class="text-red-600 hover:text-red-700"
-                                            onclick="return confirm('Are you sure?')">
-                                        Delete
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="flex space-x-4">
+                    <select name="action" class="rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500">
+                        <option value="">Select Action</option>
+                        <option value="delete">Delete Selected</option>
+                        <option value="deactivate">Deactivate Selected</option>
+                        <option value="activate">Activate Selected</option>
+                    </select>
+                    <button type="submit" class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                        Apply
+                    </button>
+                </div>
             </form>
+
+            <!-- Products Table -->
+            <table class="min-w-full">
+                <thead>
+                    <tr class="border-b">
+                        <th class="px-6 py-3 text-left">
+                            <input type="checkbox" id="select-all" class="rounded border-gray-300">
+                        </th>
+                        <th class="px-6 py-3 text-left">Product</th>
+                        <th class="px-6 py-3 text-left">Category</th>
+                        <th class="px-6 py-3 text-left">SKU</th>
+                        <th class="px-6 py-3 text-right">Price</th>
+                        <th class="px-6 py-3 text-center">Stock</th>
+                        <th class="px-6 py-3 text-center">Status</th>
+                        <th class="px-6 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($products as $product)
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="px-6 py-4">
+                            <input type="checkbox" form="mass-action-form" name="selected_products[]" value="{{ $product->id }}" class="product-checkbox rounded border-gray-300">
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img src="{{ asset('images/products/' . $product->id . '.jpg') }}" 
+                                     alt="{{ $product->name }}"
+                                     class="h-10 w-10 object-cover rounded-lg mr-3">
+                                <span>{{ $product->name }}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">{{ $product->category->name }}</td>
+                        <td class="px-6 py-4">{{ $product->sku }}</td>
+                        <td class="px-6 py-4 text-right">${{ number_format($product->base_price, 2) }}</td>
+                        <td class="px-6 py-4 text-center">{{ $product->stock_quantity }}</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-2 py-1 text-xs rounded-full {{ $product->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                {{ $product->is_active ? 'Active' : 'Inactive' }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <a href="{{ route('admin.products.edit', $product) }}" 
+                               class="text-lime-600 hover:text-lime-700 mr-3">Edit</a>
+                            <form action="{{ route('admin.products.destroy', $product) }}" 
+                                  method="POST" 
+                                  class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" 
+                                        class="text-red-600 hover:text-red-700"
+                                        onclick="return confirm('Are you sure?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
             <div class="mt-4">
                 {{ $products->links() }}

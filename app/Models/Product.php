@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\CartItem;
 use App\Models\Category;
+use App\Models\OrderItem;
 use App\Models\ProductImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,8 +39,17 @@ class Product extends Model
     }
 
     public function images()
-{
-    return $this->hasMany(ProductImage::class);
-}
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+    
 }

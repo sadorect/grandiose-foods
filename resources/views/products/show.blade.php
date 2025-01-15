@@ -54,7 +54,7 @@
                 @foreach(json_decode($product->variants, true) as $variant)
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-gray-600">{{ $variant['size'] }} {{ $variant['unit'] }}:</span>
-                        <span class="text-2xl font-bold text-lime-800">${{ number_format($variant['price'], 2) }}</span>
+                        <span class="text-2xl font-bold text-lime-800"></span>
                     </div>
                 @endforeach
                 <div class="flex justify-between items-center mb-2">
@@ -121,7 +121,8 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 @foreach($related_products as $related)
                     <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition">
-                        <img src="{{ $product->images->first() ? Storage::url($product->images->first()->path) : asset('images/placeholder.jpg') }}" 
+                        <img src="{{ $related->images->first() ? Storage::url($related->images->first()->path) : asset('images/placeholder.jpg') }}" 
+                 alt="{{ $related->name }}" 
                              alt="{{ $related->name }}"
                              class="w-full h-48 object-cover rounded-t-lg">
                         <div class="p-4">
@@ -129,10 +130,10 @@
                             <div class="flex justify-between items-center mt-2">
                                 <span class="text-xl font-bold text-lime-800">
                                     @php
-                                        $variants = json_decode($related->variants, true);
-                                        $basePrice = $variants[0]['price'] ?? $related->base_price;
+                                       // $variants = json_decode($related->variants, true);
+                                       // $basePrice = $variants[0]['price'] ?? $related->base_price;
                                     @endphp
-                                    ${{ number_format($basePrice, 2) }}
+                                    
                                 </span>
                                 <a href="{{ route('products.show', $related) }}" 
                                    class="text-lime-600 hover:text-lime-700">

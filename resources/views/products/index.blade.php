@@ -52,10 +52,10 @@
                     <div class="flex justify-between items-center">
                         <span class="text-xl font-bold text-lime-800">
                             @php
-                                $variants = json_decode($product->variants, true);
-                                $basePrice = $variants[0]['price'] ?? $product->base_price;
+                                //$variants = json_decode($product->variants, true);
+                               // $basePrice = $variants[0]['price'] ?? $product->base_price;
                             @endphp
-                            ${{ number_format($basePrice, 2) }}
+                            
                         </span>
                         <a href="{{ route('products.show', $product) }}" 
                            class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
