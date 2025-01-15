@@ -29,12 +29,12 @@ class AuthenticatedSessionController extends Controller
     $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . config('services.recaptcha.secret_key') . '&response=' . $request->input('g-recaptcha-response'));
     $recaptcha = json_decode($recaptcha);
     
-    Log::info('Login reCAPTCHA Validation:', [
-        'score' => $recaptcha->score,
+   /* Log::info('Login reCAPTCHA Validation:', [
+        'success' => $recaptcha->success,
         'action' => $recaptcha->action,
         'timestamp' => $recaptcha->challenge_ts,
         'hostname' => $recaptcha->hostname
-    ]);
+    ]);*/
         $request->authenticate();
 
         $request->session()->regenerate();
