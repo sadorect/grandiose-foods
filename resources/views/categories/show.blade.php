@@ -22,13 +22,13 @@
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($products as $product)
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition">
-                <img src="{{ asset('images/products/' . $product->id . '.jpg') }}" 
+                <img src="{{ $product->images->first() ? Storage::url($product->images->first()->path) : asset('images/placeholder.jpg') }}"  
                      alt="{{ $product->name }}"
                      class="w-full h-48 object-cover rounded-t-lg">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-lime-900">{{ $product->name }}</h3>
                     <div class="flex justify-between items-center mt-4">
-                        <span class="text-xl font-bold text-lime-800">${{ number_format($product->price, 2) }}</span>
+                        
                         <a href="{{ route('products.show', $product) }}" 
                            class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
                             View Details
