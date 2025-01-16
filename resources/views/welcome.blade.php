@@ -6,7 +6,7 @@
 @section('content')
     <!-- Hero Section -->
     <!-- Hero Section -->
-<section class="relative bg-yellow-300">
+<section class="relative bg-yellow-300 hero-section">
     <div class="hero-slide h-[600px]">
         <div class="absolute inset-0 bg-center bg-cover" style="background-image: url('{{ asset('images/hero/slide1.jpg') }}')">
             <div class="absolute inset-0 bg-black/40"></div>
