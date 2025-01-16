@@ -5,17 +5,39 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="bg-yellow-300 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-lime-900 mb-4">Premium Wholesale Food Products</h1>
-                <p class="text-xl text-lime-800 mb-8">Quality ingredients for your business needs</p>
-                @if(Route::has('products.index'))
-                    <a href="{{ route('products.index') }}" class="bg-lime-600 text-white px-8 py-3 rounded-lg hover:bg-lime-700 inline-block">Browse Catalog</a>
-                @endif
+    <!-- Hero Section -->
+<section class="relative bg-yellow-300">
+    <div class="hero-slide h-[600px]">
+        <div class="absolute inset-0 bg-center bg-cover" style="background-image: url('{{ asset('images/hero/slide1.jpg') }}')">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative h-full flex items-center justify-center text-center">
+                <div class="text-white">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-4">Premium Wholesale Foods</h1>
+                    <p class="text-xl md:text-2xl mb-8">Quality ingredients for your business success</p>
+                    <a href="{{ route('products.index') }}" class="bg-lime-600 text-white px-8 py-4 rounded-lg hover:bg-lime-700 transition-colors text-lg">
+                        Explore Our Products
+                    </a>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <div class="hero-slide h-[600px] hidden">
+        <div class="absolute inset-0 bg-center bg-cover" style="background-image: url('{{ asset('images/hero/slide2.jpeg') }}')">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative h-full flex items-center justify-center text-center">
+                <div class="text-white">
+                    <h2 class="text-5xl md:text-6xl font-bold mb-4">Bulk Orders Welcome</h2>
+                    <p class="text-xl md:text-2xl mb-8">Special pricing for wholesale customers</p>
+                    <a href="{{ route('register') }}" class="bg-yellow-500 text-lime-900 px-8 py-4 rounded-lg hover:bg-yellow-400 transition-colors text-lg">
+                        Register Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
     <!-- Featured Categories -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -72,4 +94,8 @@
             </div>
         </div>
     </section>
+    @push('scripts')
+    <script src="{{ asset('js/hero-slider.js') }}"></script>
+@endpush
+
 @endsection

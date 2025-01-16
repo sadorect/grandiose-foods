@@ -32,6 +32,7 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Structured Data -->
     @yield('structured_data')
+    @stack('scripts')
 </head>
 <body class="bg-yellow-50">
     @include('layouts.navigation')
