@@ -8,6 +8,10 @@
            class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.dashboard') ? 'bg-lime-700' : '' }}">
             <span>Dashboard</span>
         </a>
+        <a href="{{ route('admin.hero-slides.index') }}" class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.hero-slides.*') ? 'bg-lime-700' : '' }}">
+    <span>Hero Slides</span>
+    </a>
+
         <a href="{{ route('admin.categories.index') }}" 
            class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.categories.*') ? 'bg-lime-700' : '' }}">
             <span>Categories</span>

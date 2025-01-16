@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CategoryManagementController;
 
@@ -30,6 +31,7 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     Route::get('/profile/sessions', [ProfileController::class, 'sessions'])->name('profile.sessions');
     Route::delete('/profile/sessions/{session}', [ProfileController::class, 'terminateSession'])->name('profile.sessions.terminate');
 
+    Route::resource('admin/hero-slides', HeroSlideController::class);
     // Authentication
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     
