@@ -66,7 +66,7 @@ class DrinkProductSeeder extends Seeder
               'name' => $drink['name'],
               'slug' => $drink['slug'],
               'category_id' => $drink['category_id'],
-              'description' => fake()->realText(),
+              'description' => fake()->realText(50),
               'base_price' => fake()->numberBetween(100, 5000),
               'stock_quantity' => fake()->numberBetween(10, 100),
               'is_active' => true,
