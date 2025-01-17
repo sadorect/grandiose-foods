@@ -1,4 +1,4 @@
-<nav class="bg-yellow-200 shadow">
+<nav class="bg-yellow-300 shadow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <!-- Left side navigation -->
@@ -6,12 +6,12 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="/">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
+                        <x-application-logo class="block h-10 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden text-gray-800 space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
                         Products
                     </x-nav-link>

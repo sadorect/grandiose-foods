@@ -13,6 +13,21 @@
         </ol>
     </nav>
 
+
+     <!-- Category Header with Image -->
+     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+        <div class="relative h-64 md:h-80">
+            <img src="{{ $category->image }}" 
+                 alt="{{ $category->name }}" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <h1 class="text-3xl font-bold mb-2">{{ $category->name }}</h1>
+                <p class="text-lg">{{ $category->description }}</p>
+            </div>
+        </div>
+    </div>
+    
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-lime-900 mb-4">{{ $category->name }}</h1>
         <p class="text-gray-600">{{ $category->description }}</p>

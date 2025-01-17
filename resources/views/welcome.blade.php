@@ -35,7 +35,7 @@
                     <img src="{{ $category->image }}" alt="{{ $category->name }}" class="w-full h-48 object-cover rounded-lg mb-4">
                     <h3 class="text-xl font-semibold text-lime-800 mb-2">{{ $category->name }}</h3>
                     <p class="text-gray-600 mb-4">{{ $category->description }}</p>
-                    <a href="#" class="text-lime-600 hover:text-lime-700">View Products →</a>
+                    <a href="{{route('categories.show', $category->slug)}}" class="text-lime-600 hover:text-lime-700">View Products →</a>
                 </div>
             @endforeach
         </div>

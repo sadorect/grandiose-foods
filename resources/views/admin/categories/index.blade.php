@@ -14,6 +14,7 @@
     <table class="w-full">
         <thead class="bg-gray-50">
             <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Products</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -22,6 +23,12 @@
         <tbody class="bg-white divide-y divide-gray-200">
             @foreach($categories as $category)
                 <tr>
+                    <td class="px-6 py-4">
+                        <img src="{{ $category->image }}"
+     alt="{{ $category->name }}"
+     class="h-16 w-16 object-cover rounded-lg">
+
+                    </td>
                     <td class="px-6 py-4">{{ $category->name }}</td>
                     <td class="px-6 py-4">{{ $category->products_count }}</td>
                     <td class="px-6 py-4 flex space-x-2">
