@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\AdminLoginRateLimiter;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\DatabaseController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -66,4 +68,14 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     Route::resource('contact-messages', ContactMessageController::class);
     Route::post('contact-messages/{message}/reply', [ContactMessageController::class, 'reply'])
          ->name('contact-messages.reply');
+
+        // Backup routes
+            Route::get('/backups', [BackupController::class, 'index'])->name('backups.index');
+            Route::post('/backups', [BackupController::class, 'create'])->name('backups.create');
+            Route::get('/backups/{fileName}/download', [BackupController::class, 'download'])->name('backups.download');
+            Route::delete('/backups/{fileName}', [BackupController::class, 'delete'])->name('backups.delete');
+            Route::post('/backups/{fileName}/restore', [BackupController::class, 'restore'])->name('backups.restore');
+
+            Route::get('/database', [DatabaseController::class, 'index'])->name('database.index');
+            Route::post('/database/query', [DatabaseController::class, 'executeQuery'])->name('database.query');
 });

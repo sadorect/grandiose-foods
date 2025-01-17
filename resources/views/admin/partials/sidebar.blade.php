@@ -44,5 +44,15 @@
            class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.settings') ? 'bg-lime-700' : '' }}">
             <span>Settings</span>
         </a>
+        <a href="{{ route('admin.backups.index') }}" 
+   class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.backups.*') ? 'bg-lime-700' : '' }}">
+    <span>Backups</span>
+</a>
+<a href="{{ route('admin.database.index') }}" 
+   class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.database.*') ? 'bg-lime-700' : '' }}">
+    <span>Database</span>
+</a>
+
+
     </nav>
 </div>
