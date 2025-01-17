@@ -18,7 +18,7 @@
     <div class="flex justify-between items-center mb-8">
         <div class="flex space-x-4">
             <form method="GET" action="{{ route('products.index') }}" class="flex items-center space-x-4">
-                <select name="category" class="rounded-lg bg-yellow-200 border-gray-300" onchange="this.form.submit()">
+                <select name="category" class="p-3 rounded-lg bg-yellow-200 border-gray-300" onchange="this.form.submit()">
                     <option value="">All Categories</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" @selected(request('category') == $category->id)>
@@ -33,7 +33,7 @@
             <input type="search" 
                    name="search" 
                    placeholder="Search products..." 
-                   class="rounded-lg border-gray-300"
+                   class="p-3 rounded-lg border-gray-300"
                    value="{{ request('search') }}">
         </div>
     </div>

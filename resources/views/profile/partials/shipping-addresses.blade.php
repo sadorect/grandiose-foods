@@ -70,12 +70,12 @@
                 <div>
                     <x-input-label for="label" value="Address Label" />
                     <x-text-input id="label" name="label" type="text" placeholder="e.g., Main Warehouse"
-                        class="mt-1 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
+                        class="mt-1 p-3 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
                 </div>
                 <div>
                     <x-input-label for="street" value="Street Address" />
                     <x-text-input id="street" name="street" type="text"
-                        class="mt-1 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
+                        class="mt-1 p-3 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
                 </div>
             </div>
 
@@ -83,17 +83,17 @@
                 <div>
                     <x-input-label for="city" value="City" />
                     <x-text-input id="city" name="city" type="text"
-                        class="mt-1 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
+                        class="mt-1 p-3 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
                 </div>
                 <div>
                     <x-input-label for="state" value="State" />
                     <x-text-input id="state" name="state" type="text"
-                        class="mt-1 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
+                        class="mt-1 p-3 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
                 </div>
                 <div>
                     <x-input-label for="zip" value="ZIP Code" />
                     <x-text-input id="zip" name="zip" type="text"
-                        class="mt-1 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
+                        class="mt-1 p-3 block w-full rounded-lg bg-yellow-50 border-lime-500 focus:border-lime-600 focus:ring-lime-500" />
                 </div>
             </div>
 

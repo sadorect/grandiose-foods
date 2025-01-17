@@ -3,6 +3,19 @@
 @section('title', 'Contact Us - Grandiose Foods')
 
 @section('content')
+
+<!-- Contact Header -->
+<div class="relative bg-lime-900 py-16">
+    <div class="absolute inset-0 overflow-hidden">
+        <img src="{{ asset('images/contact-header.jpg') }}" 
+             alt="Contact Us" 
+             class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Get in Touch</h1>
+        <p class="text-xl text-yellow-100">We're here to help with all your wholesale food needs</p>
+    </div>
+</div>
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
         <!-- Contact Information -->
@@ -46,7 +59,20 @@
                     </div>
                 </div>
             </div>
+<!-- Google Maps Section -->
+            <div class="mt-8 mb-8 h-96 rounded-lg overflow-hidden shadow-lg">
+                <iframe
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    style="border:0"
+                    src="https://www.google.com/maps/embed/v1/place?key={{ config('services.google.maps_key') }}&q=7900+Harford+Rd,+Parkville,+MD+21234"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
+
+
 
         <!-- Contact Form -->
         <div class="bg-white p-8 rounded-lg shadow-md">
@@ -64,7 +90,7 @@
                 <div>
                     <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
                     <input type="text" name="name" id="name" 
-                    class="w-full border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('name') border-red-500 @enderror" 
+                    class="w-full p-3 border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('name') border-red-500 @enderror" 
                     value="{{ old('name') }}" required>
                     @error('name')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -74,7 +100,7 @@
                 <div>
                     <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
                     <input type="email" name="email" id="email" 
-                           class="w-full border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('email') border-red-500 @enderror" 
+                           class="w-full p-3 border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('email') border-red-500 @enderror" 
                            value="{{ old('email') }}" required>
                     @error('email')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -84,7 +110,7 @@
                 <div>
                     <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
                     <input type="text" name="subject" id="subject" 
-                           class="w-full border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('subject') border-red-500 @enderror" 
+                           class="w-full p-3 border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('subject') border-red-500 @enderror" 
                            value="{{ old('subject') }}" required>
                     @error('subject')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -94,7 +120,7 @@
                 <div>
                     <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
                     <textarea name="message" id="message" rows="4" 
-                              class="w-full border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('message') border-red-500 @enderror" 
+                              class="w-full p-3 border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('message') border-red-500 @enderror" 
                               required>{{ old('message') }}</textarea>
                     @error('message')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
