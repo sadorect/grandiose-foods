@@ -49,6 +49,8 @@
         <form action="{{ route('admin.contact-messages.reply', $message->id) }}" method="POST">
             @csrf
             <div class="mb-4">
+                <input type="hidden" name="original_message" value="{{ $message->content }}" />
+                
                 <textarea 
                     name="reply_content" 
                     rows="6" 

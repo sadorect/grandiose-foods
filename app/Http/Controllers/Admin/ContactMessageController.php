@@ -37,7 +37,7 @@ class ContactMessageController extends Controller
     
     public function reply(ContactMessage $message)
     {
-        Mail::to($message->email)->send(new AdminReply($message, request('reply_content'), $message->name, $message->subject));
+        Mail::to($message->email)->send(new AdminReply($message, request('reply_content'), $message->name, $message->subject, request('original_message')));
         $message->update(['status' => ContactMessage::STATUS_REPLIED]);
         
         return redirect()->route('admin.contact-messages.show', $message)

@@ -41,7 +41,14 @@ return [
     ],
 'google' => [
     'maps_key' => env('GOOGLE_MAPS_API_KEY'),
+],
+'social' => [
+    'facebook' => env('SOCIAL_FACEBOOK', 'https://facebook.com/grandiosefoods'),
+    'twitter' => env('SOCIAL_TWITTER', 'https://twitter.com/grandiosefoods'),
+    'instagram' => env('SOCIAL_INSTAGRAM', 'https://instagram.com/grandiosefoods'),
 ]
+
+
 
 ];
 
