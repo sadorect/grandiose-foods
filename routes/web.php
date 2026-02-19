@@ -17,8 +17,10 @@ use App\Http\Controllers\ShippingAddressController;
 
 Route::middleware(AdminLoginRateLimiter::class)->group(function () {
     Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('admin/login', [AdminAuthController::class, 'login'])->name('admin.access');
 });
+Route::post('admin/login', [AdminAuthController::class, 'login'])
+    ->middleware(AdminLoginRateLimiter::class)
+    ->name('admin.access');
 
 // Auth routes (added by Breeze)
 Route::middleware('auth', 'verified')->group(function () {
@@ -29,9 +31,9 @@ Route::middleware('auth', 'verified')->group(function () {
     // Shipping Address Routes
     Route::get('/profile/addresses', [ShippingAddressController::class, 'index'])->name('profile.addresses.index');
     Route::post('/profile/addresses', [ShippingAddressController::class, 'store'])->name('profile.addresses.store');
-    Route::get('/profile/addresses/{address}/edit', [ShippingAddressController::class, 'edit'])->name('profile.addresses.edit');
-    Route::patch('/profile/addresses/{address}', [ShippingAddressController::class, 'update'])->name('profile.addresses.update');
-    Route::delete('/profile/addresses/{address}', [ShippingAddressController::class, 'destroy'])->name('profile.addresses.destroy');
+    Route::get('/profile/addresses/{address:id}/edit', [ShippingAddressController::class, 'edit'])->name('profile.addresses.edit');
+    Route::patch('/profile/addresses/{address:id}', [ShippingAddressController::class, 'update'])->name('profile.addresses.update');
+    Route::delete('/profile/addresses/{address:id}', [ShippingAddressController::class, 'destroy'])->name('profile.addresses.destroy');
 
 });
 
@@ -60,8 +62,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::patch('/cart/{product}/quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
 
     // Order Routes
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{order}/reorder', [OrderController::class, 'reorder'])->name('orders.reorder');
+    Route::get('/orders/{order:id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{order:id}/reorder', [OrderController::class, 'reorder'])->name('orders.reorder');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
     // Checkout Routes

@@ -10,14 +10,32 @@ class DatabaseController extends Controller
 {
     public function index()
     {
+        abort_unless(app()->environment(['local', 'testing']), 403, 'Database console is disabled in this environment.');
+
         $tables = DB::select('SHOW TABLES');
         return view('admin.database.index', compact('tables'));
     }
 
     public function executeQuery(Request $request)
     {
-        $query = $request->input('query');
-        $results = DB::select($query);
+        abort_unless(app()->environment(['local', 'testing']), 403, 'Database console is disabled in this environment.');
+
+        $validated = $request->validate([
+            'query' => ['required', 'string', 'max:5000'],
+        ]);
+
+        $query = trim($validated['query']);
+
+        if (! preg_match('/^(select|show|describe|explain)\s/i', $query) || str_contains($query, ';')) {
+            return back()->with('error', 'Only single read-only queries are allowed.');
+        }
+
+        try {
+            $results = DB::select($query);
+        } catch (\Throwable $exception) {
+            return back()->with('error', 'Query execution failed.');
+        }
+
         return back()->with(['results' => $results, 'query' => $query]);
     }
 }

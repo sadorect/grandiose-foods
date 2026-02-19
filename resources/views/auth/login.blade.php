@@ -31,7 +31,14 @@
                     </a>
                 @endif
             </div>
-            <input type="hidden" name="g-recaptcha-response" id="recaptcha-token">
+
+            <div>
+                <x-input-label for="math_captcha_answer" :value="'Solve: '.$mathCaptchaQuestion" class="text-gray-700" />
+                <x-text-input id="math_captcha_answer" type="number" name="math_captcha_answer" required
+                    class="mt-1 block w-full rounded-md bg-yellow-50 border-gray-300 focus:border-lime-500 focus:ring-lime-500" />
+                <x-input-error :messages="$errors->get('math_captcha_answer')" class="mt-2" />
+            </div>
+
             <button type="submit" class="w-full bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
                 Log in
             </button>
@@ -42,15 +49,4 @@
             </p>
         </form>
     </div>
-
-    <!-- reCAPTCHA v3 script -->
-    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
-    <script>
-        grecaptcha.ready(function() {
-            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'login'})
-                .then(function(token) {
-                    document.getElementById('recaptcha-token').value = token;
-                });
-        });
-    </script>
 </x-guest-layout>

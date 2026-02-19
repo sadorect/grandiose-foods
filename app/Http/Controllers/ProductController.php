@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -20,7 +21,9 @@ class ProductController extends Controller
             ->where('is_active', true)
             ->paginate(12);
 
-        $categories = Category::all();
+        $categories = Cache::remember('public.product.categories', now()->addMinutes(10), function () {
+            return Category::query()->select('id', 'name')->orderBy('name')->get();
+        });
 
         return view('products.index', compact('products', 'categories'));
     }
@@ -31,6 +34,8 @@ class ProductController extends Controller
             'product' => $product->load('images', 'category'),
             'related_products' => Product::where('category_id', $product->category_id)
                 ->where('id', '!=', $product->id)
+                ->where('is_active', true)
+                ->with('images')
                 ->limit(4)
                 ->get()
         ]);

@@ -26,7 +26,7 @@ class ContactController extends Controller
 $validated['content'] = $validated['message'];
         ContactMessage::create($validated);
         // Send email
-        Mail::to('info@grandiosefoods.com')->send(new ContactFormMail($validated));
+    Mail::to('info@grandiosefoods.com')->queue(new ContactFormMail($validated));
 
         return back()->with('success', 'Thank you for your message. We will get back to you soon!');
     }

@@ -18,7 +18,12 @@ class DashboardController extends Controller
             'ordersCount' => Order::count(),
             'customersCount' => User::where('is_admin', false)->count(),
             'recentOrders' => Order::with('user')->latest()->take(5)->get(),
-            'lowStockProducts' => Product::where('stock_quantity', '<=', 20)->get()
+            'lowStockProducts' => Product::query()
+                ->select('id', 'name', 'stock_quantity')
+                ->where('stock_quantity', '<=', 20)
+                ->orderBy('stock_quantity')
+                ->limit(10)
+                ->get(),
         ]);
     }
 }

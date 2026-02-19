@@ -5,19 +5,21 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\ShippingAddress;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
     public function index()
 {
-    $cart = Cart::where('user_id', auth()->id())->with('items.product')->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->with('items.product')->firstOrFail();
     $cartItems = $cart->items;
     $products = $cartItems->pluck('product');
-    $addresses = auth()->user()->addresses;
+        $addresses = Auth::user()->addresses;
     
     return view('checkout.index', compact('cart', 'cartItems', 'products', 'addresses'));
 }
@@ -29,7 +31,7 @@ public function store(Request $request)
         DB::beginTransaction();
         
         // 1. Get cart first to ensure it exists
-        $cart = Cart::where('user_id', auth()->id())
+        $cart = Cart::where('user_id', Auth::id())
             ->with('items.product')
             ->firstOrFail();
             
@@ -54,9 +56,14 @@ public function store(Request $request)
        
         // 3. Handle address
         if ($validated['shipping_address_id'] === 'new') {
-            $address = auth()->user()->addresses()->create($validated['new_address']);
+            $address = ShippingAddress::create([
+                ...$validated['new_address'],
+                'user_id' => Auth::id(),
+            ]);
         } else {
-            $address = auth()->user()->addresses()->findOrFail($validated['shipping_address_id']);
+            $address = ShippingAddress::query()
+                ->where('user_id', Auth::id())
+                ->findOrFail($validated['shipping_address_id']);
         }
 
        
@@ -68,7 +75,7 @@ public function store(Request $request)
 
             // 5. Create order
             $order = Order::create([
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'order_number' => 'ORD-' . strtoupper(Str::random(8)),
                 'subtotal' => $cart->subtotal,
                 'tax' => $cart->tax,
@@ -88,6 +95,13 @@ public function store(Request $request)
 
         // 6. Create order items
         foreach($cart->items as $item) {
+            $variants = $item->product->variants;
+            if (is_string($variants)) {
+                $variants = json_decode($variants, true) ?? [];
+            }
+
+            $firstVariant = is_array($variants) ? ($variants[0] ?? []) : [];
+
             $order->items()->create([
                 'product_id' => $item->product_id,
                 'product_name' => $item->product->name,
@@ -114,7 +128,7 @@ public function store(Request $request)
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            return back()->with('error', 'Order processing failed: ' . $e->getMessage());
+            return back()->with('error', 'Order processing failed. Please try again.');
         }
     }
 

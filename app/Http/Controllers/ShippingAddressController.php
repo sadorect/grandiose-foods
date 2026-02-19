@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\ShippingAddress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShippingAddressController extends Controller
 {
+    private function getOwnedAddress(ShippingAddress $address): ShippingAddress
+    {
+        return ShippingAddress::query()
+            ->where('user_id', Auth::id())
+            ->findOrFail($address->id);
+    }
+
   /**
    * Display a listing of the user's shipping addresses.
    *
@@ -14,7 +22,10 @@ class ShippingAddressController extends Controller
    */
   public function index()
   {
-      $addresses = auth()->user()->addresses()->latest()->get();
+      $addresses = ShippingAddress::query()
+          ->where('user_id', Auth::id())
+          ->latest()
+          ->get();
       return view('profile.addresses.index', compact('addresses'));
   }
 
@@ -28,7 +39,8 @@ class ShippingAddressController extends Controller
           'zip' => 'required|string|max:20',
       ]);
   
-      $address = auth()->user()->addresses()->create($validated);
+    $validated['user_id'] = Auth::id();
+    $address = ShippingAddress::create($validated);
   
       return redirect()->back()->withFragment('shipping-addresses')->with('status', 'Address saved successfully');
   }
@@ -36,6 +48,8 @@ class ShippingAddressController extends Controller
 
     public function update(Request $request, ShippingAddress $address)
     {
+        $address = $this->getOwnedAddress($address);
+
         $validated = $request->validate([
             'label' => ['required', 'string', 'max:255'],
             'street' => ['required', 'string', 'max:255'],
@@ -50,12 +64,14 @@ class ShippingAddressController extends Controller
     }
     public function edit(ShippingAddress $address)
     {
+        $address = $this->getOwnedAddress($address);
         return response()->json($address);
     }
     
     
     public function destroy(ShippingAddress $address)
     {
+        $address = $this->getOwnedAddress($address);
         $address->delete();
         return redirect()->back()->withFragment('shipping-addresses')->with('status', 'Address removed successfully');
     }

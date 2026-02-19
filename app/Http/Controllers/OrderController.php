@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Log;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -24,14 +25,14 @@ class OrderController extends Controller
         'notes' => 'nullable|string'
     ]);
 
-    $cart = Cart::where('user_id', auth()->id())->with('items.product')->firstOrFail();
+    $cart = Cart::where('user_id', Auth::id())->with('items.product')->firstOrFail();
 
     $order = Order::create([
         'company_name' => $validated['company_name'],
         'contact_name' => $validated['contact_name'],
         'email' => $validated['email'],
         'phone' => $validated['phone'],
-        'user_id' => auth()->id(),
+        'user_id' => Auth::id(),
         'order_number' => 'ORD-' . strtoupper(Str::random(8)),
         'subtotal' => $cart->subtotal,
         'tax' => $cart->tax,
@@ -70,13 +71,21 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+        abort_unless($order->user_id === Auth::id(), 403);
+
+        $order->load('items.product');
+
         return view('orders.show', compact('order'));
     }
 
     public function reorder(Order $order)
 {
+    abort_unless($order->user_id === Auth::id(), 403);
+
     try {
-        $cart = Cart::firstOrCreate(['user_id' => auth()->id()]);
+        $order->load('items');
+
+        $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
         
         foreach($order->items as $item) {
             $cart->items()->create([

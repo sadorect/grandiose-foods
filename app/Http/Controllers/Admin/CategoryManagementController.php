@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryManagementController extends Controller
@@ -38,6 +39,8 @@ class CategoryManagementController extends Controller
         }
 
         Category::create($validated);
+        Cache::forget('admin.product.categories');
+        Cache::forget('public.product.categories');
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category created successfully');
@@ -61,8 +64,9 @@ class CategoryManagementController extends Controller
         // Handle image upload
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($category->image) {
-                Storage::disk('public')->delete($category->image);
+            $oldImage = $category->getRawOriginal('image');
+            if ($oldImage) {
+                Storage::disk('public')->delete($oldImage);
             }
             
             $imagePath = $request->file('image')->store('categories', 'public');
@@ -70,6 +74,8 @@ class CategoryManagementController extends Controller
         }
 
         $category->update($validated);
+        Cache::forget('admin.product.categories');
+        Cache::forget('public.product.categories');
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category updated successfully');
@@ -78,10 +84,13 @@ class CategoryManagementController extends Controller
     public function destroy(Category $category)
     {
          // Delete associated image
-         if ($category->image) {
-            Storage::disk('public')->delete($category->image);
+        $imagePath = $category->getRawOriginal('image');
+         if ($imagePath) {
+            Storage::disk('public')->delete($imagePath);
         }
         $category->delete();
+        Cache::forget('admin.product.categories');
+        Cache::forget('public.product.categories');
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category deleted successfully');

@@ -11,17 +11,50 @@ use Spatie\Backup\Tasks\Backup\BackupJob;
 
 class BackupController extends Controller
 {
+    private function backupDirectory(): string
+    {
+        return (string) config('backup.backup.name', 'Grandiose Foods');
+    }
+
+    private function sanitizeFileName(string $fileName): ?string
+    {
+        $safeName = basename($fileName);
+
+        if ($safeName === '' || $safeName !== $fileName || str_contains($safeName, '..')) {
+            return null;
+        }
+
+        return $safeName;
+    }
+
+    private function resolveBackupPath(string $fileName): ?string
+    {
+        $safeName = $this->sanitizeFileName($fileName);
+
+        if (! $safeName) {
+            return null;
+        }
+
+        $relativePath = $this->backupDirectory().'/'.$safeName;
+
+        if (! Storage::disk('local')->exists($relativePath)) {
+            return null;
+        }
+
+        return $relativePath;
+    }
   
 
 public function index()
 {
-  $backupPath = 'Grandiose Foods';
-    $backups = collect(Storage::files($backupPath))
+    $backupPath = $this->backupDirectory();
+
+    $backups = collect(Storage::disk('local')->files($backupPath))
         ->map(function ($file) {
             return [
                 'filename' => basename($file),
-                'size' => Storage::size($file),
-                'created_at' => Storage::lastModified($file)
+                'size' => Storage::disk('local')->size($file),
+                'created_at' => Storage::disk('local')->lastModified($file),
             ];
         })
         ->sortByDesc('created_at');
@@ -57,21 +90,33 @@ public function index()
 
 public function download($fileName)
 {
-    $path = storage_path("app/Grandiose Foods/{$fileName}");
-    return response()->download($path);
+    $path = $this->resolveBackupPath($fileName);
+
+    abort_unless($path, 404);
+
+    return response()->download(storage_path('app/'.$path));
 }
 
 
     public function delete($fileName)
     {
-        Storage::delete("backups/{$fileName}");
+        $path = $this->resolveBackupPath($fileName);
+
+        abort_unless($path, 404);
+
+        Storage::disk('local')->delete($path);
+
         return redirect()->back()->with('success', 'Backup deleted successfully');
     }
 
-    public function restore(Request $request)
+    public function restore($fileName)
 {
-    $fileName = $request->backup_file;
-    Artisan::call('backup:restore', ['filename' => $fileName]);
+    $path = $this->resolveBackupPath($fileName);
+
+    abort_unless($path, 404);
+
+    Artisan::call('backup:restore', ['filename' => basename($path)]);
+
     return redirect()->back()->with('success', 'System restored successfully');
 }
 

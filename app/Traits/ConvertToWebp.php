@@ -2,7 +2,8 @@
 
 namespace App\Traits;
 
-use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 trait ConvertToWebp
 {
@@ -17,10 +18,10 @@ trait ConvertToWebp
         }
         
         $fullPath = $directory . '/' . $filename;
-        
-        $sourceImage = imagecreatefromstring(file_get_contents($image));
-        imagewebp($sourceImage, $fullPath, 80);
-        imagedestroy($sourceImage);
+
+        $manager = new ImageManager(new Driver());
+        $optimizedImage = $manager->read($image->getRealPath())->toWebp(80);
+        $optimizedImage->save($fullPath);
         
         return $path . '/' . $filename;
     }

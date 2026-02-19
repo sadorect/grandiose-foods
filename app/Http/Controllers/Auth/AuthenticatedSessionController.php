@@ -4,20 +4,23 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Support\MathCaptcha;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
-        return view('auth.login');
+        return view('auth.login', [
+            'mathCaptchaQuestion' => MathCaptcha::generate($request, 'user_login'),
+        ]);
     }
 
     /**
@@ -25,21 +28,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Validate reCAPTCHA token
-    $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . config('services.recaptcha.secret_key') . '&response=' . $request->input('g-recaptcha-response'));
-    $recaptcha = json_decode($recaptcha);
-    
-   /* Log::info('Login reCAPTCHA Validation:', [
-        'success' => $recaptcha->success,
-        'action' => $recaptcha->action,
-        'timestamp' => $recaptcha->challenge_ts,
-        'hostname' => $recaptcha->hostname
-    ]);*/
+        $request->validate([
+            'math_captcha_answer' => ['required', 'integer'],
+        ]);
+
+        if (! MathCaptcha::validate($request, 'user_login', (string) $request->input('math_captcha_answer'))) {
+            throw ValidationException::withMessages([
+                'math_captcha_answer' => 'Incorrect captcha answer. Please try again.',
+            ]);
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        if (auth()->user()->is_admin) {
+        if (Auth::user()->is_admin) {
             return redirect()->intended(route('admin.dashboard'));
         }
         

@@ -12,6 +12,7 @@ use App\Imports\ProductsImport;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -39,7 +40,9 @@ class ProductController extends Controller
     }
 
     $products = $query->with('category')->paginate(10);
-    $categories = Category::all();
+    $categories = Cache::remember('admin.product.categories', now()->addMinutes(10), function () {
+        return Category::query()->select('id', 'name')->orderBy('name')->get();
+    });
 
     return view('admin.products.index', compact('products', 'categories'));
 }
@@ -47,7 +50,9 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Cache::remember('admin.product.categories', now()->addMinutes(10), function () {
+            return Category::query()->select('id', 'name')->orderBy('name')->get();
+        });
         return view('admin.products.create', compact('categories'));
     }
 
@@ -85,7 +90,9 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::all();
+        $categories = Cache::remember('admin.product.categories', now()->addMinutes(10), function () {
+            return Category::query()->select('id', 'name')->orderBy('name')->get();
+        });
         $product->load('category'); // Eager load the category relationship
         return view('admin.products.edit', compact('product', 'categories'));
     }
@@ -181,6 +188,8 @@ class ProductController extends Controller
     public function destroyImage(Product $product, ProductImage $image)
     {
         try {
+            abort_unless($image->product_id === $product->id, 404);
+
             // Delete file from storage
             Storage::disk('public')->delete($image->path);
             // Delete database record
@@ -194,12 +203,31 @@ class ProductController extends Controller
     
     public function massAction(Request $request)
 {
-    $selectedProducts = $request->input('selected_products', []);
-    $action = $request->input('action');
+    $validated = $request->validate([
+        'selected_products' => ['required', 'array', 'min:1'],
+        'selected_products.*' => ['integer', 'exists:products,id'],
+        'action' => ['required', 'in:delete,deactivate,activate'],
+    ]);
+
+    $selectedProducts = $validated['selected_products'];
+    $action = $validated['action'];
 
     switch($action) {
         case 'delete':
-            Product::whereIn('id', $selectedProducts)->delete();
+            $products = Product::with('images')->whereIn('id', $selectedProducts)->get();
+
+            foreach ($products as $product) {
+                $product->cartItems()->delete();
+                $product->orderItems()->delete();
+
+                foreach ($product->images as $image) {
+                    Storage::disk('public')->delete($image->path);
+                }
+
+                $product->images()->delete();
+                $product->delete();
+            }
+
             return redirect()->route('admin.products.index')->with('success', 'Selected products deleted');
             
         case 'deactivate':
