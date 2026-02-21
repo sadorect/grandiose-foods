@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Log;
 class OrderController extends Controller
 {
     public function store(Request $request)
-    { //dd($request);
-    $validated = $request->validate([
+    {
+        $validated = $request->validate([
         'company_name' => 'required|string|max:255',
         'contact_name' => 'required|string|max:255',
         'email' => 'required|email',

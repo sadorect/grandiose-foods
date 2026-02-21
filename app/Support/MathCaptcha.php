@@ -8,8 +8,8 @@ class MathCaptcha
 {
     public static function generate(Request $request, string $context): string
     {
-        $left = random_int(1, 20);
-        $right = random_int(1, 20);
+        $left = random_int(1, 9);
+        $right = random_int(1, 9);
 
         $request->session()->put(self::sessionKey($context), self::hashAnswer($left + $right));
 

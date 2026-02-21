@@ -143,17 +143,17 @@ class ProductController extends Controller
     {
         try {
             $request->validate([
-                'file' => 'required|mimes:xlsx,csv'
+                'file' => 'required|mimes:xlsx,csv|max:5120',
             ]);
 
             Log::info('Starting import');
             Excel::import(new ProductsImport, $request->file('file'));
             Log::info('Import completed');
-            
+
             return back()->with('success', 'Products imported successfully');
         } catch (\Exception $e) {
-            Log::error('Import failed:', ['error' => $e->getMessage()]);
-            return back()->with('error', 'Import failed: ' . $e->getMessage());
+            Log::error('Import failed', ['error' => $e->getMessage()]);
+            return back()->with('error', 'Import failed. Please check the file format and try again.');
         }
     }
     public function export()
@@ -180,8 +180,8 @@ class ProductController extends Controller
 
             return redirect()->back()->with('success', 'Images uploaded successfully');
         } catch (\Exception $e) {
-            Log::error('Image upload error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Error uploading images: ' . $e->getMessage());
+            Log::error('Image upload error', ['error' => $e->getMessage()]);
+            return redirect()->back()->with('error', 'Image upload failed. Please check the file and try again.');
         }
     }
 

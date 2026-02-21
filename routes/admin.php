@@ -66,6 +66,8 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
 
     // Contact Messages
     Route::resource('contact-messages', ContactMessageController::class);
+    Route::post('contact-messages/mass-action', [ContactMessageController::class, 'massAction'])
+        ->name('contact-messages.mass-action');
     Route::post('contact-messages/{message}/reply', [ContactMessageController::class, 'reply'])
          ->name('contact-messages.reply');
 

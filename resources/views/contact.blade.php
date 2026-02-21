@@ -86,7 +86,6 @@
 
             <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
                 @csrf
-                
                 <div>
                     <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
                     <input type="text" name="name" id="name" 
@@ -128,8 +127,11 @@
                 </div>
 
                 <div>
-                   
-                    @error('g-recaptcha-response')
+                    <label for="math_captcha_answer" class="block text-gray-700 font-medium mb-2">Solve: {{ $mathCaptchaQuestion }}</label>
+                    <input type="number" name="math_captcha_answer" id="math_captcha_answer"
+                           class="w-full p-3 border-gray-300 rounded-lg bg-yellow-200 focus:border-lime-600 @error('math_captcha_answer') border-red-500 @enderror"
+                           value="{{ old('math_captcha_answer') }}" required>
+                    @error('math_captcha_answer')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -141,14 +143,4 @@
         </div>
     </div>
 </div>
- <!-- reCAPTCHA v3 script -->
- <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
- <script>
-     grecaptcha.ready(function() {
-         grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'login'})
-             .then(function(token) {
-                 document.getElementById('recaptcha-token').value = token;
-             });
-     });
- </script>
 @endsection

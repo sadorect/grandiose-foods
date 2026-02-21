@@ -50,7 +50,9 @@ Route::get('/categories', [PublicCategoryController::class, 'index'])->name('cat
 Route::get('/categories/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit'])
+    ->middleware('throttle:10,1')
+    ->name('contact.submit');
 
 
 

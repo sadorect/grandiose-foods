@@ -12,8 +12,6 @@ class ProductsImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        Log::info('Importing row:', $row); // Debug incoming data
-        
         try {
             $variant = [
                 [

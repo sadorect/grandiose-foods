@@ -18,10 +18,33 @@
         </div>
     </div>
 
+    <form id="bulk-message-action-form" action="{{ route('admin.contact-messages.mass-action') }}" method="POST" class="mb-4 flex flex-wrap items-center gap-3">
+        @csrf
+        <select name="action" class="rounded-md border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500" required>
+            <option value="">Bulk Action</option>
+            <option value="mark_unread">Mark as Unread</option>
+            <option value="mark_read">Mark as Read</option>
+            <option value="mark_replied">Mark as Replied</option>
+            <option value="delete">Delete</option>
+        </select>
+        <button type="submit" class="bg-lime-700 text-white px-4 py-2 rounded-lg hover:bg-lime-800" onclick="return confirm('Apply this action to selected messages?')">
+            Apply
+        </button>
+        @error('action')
+            <p class="text-sm text-red-600">{{ $message }}</p>
+        @enderror
+        @error('selected_messages')
+            <p class="text-sm text-red-600">{{ $message }}</p>
+        @enderror
+    </form>
+
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <input id="select-all-messages" type="checkbox" class="rounded border-gray-300 text-lime-700 shadow-sm focus:border-lime-500 focus:ring-lime-500">
+                    </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
@@ -34,11 +57,25 @@
                 @foreach($messages as $message)
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <input form="bulk-message-action-form" name="selected_messages[]" value="{{ $message->id }}" type="checkbox" class="message-select-checkbox rounded border-gray-300 text-lime-700 shadow-sm focus:border-lime-500 focus:ring-lime-500">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @php
+                                $statusLabel = match ((int) $message->status) {
+                                    0 => 'Unread',
+                                    1 => 'Read',
+                                    default => 'Replied',
+                                };
+
+                                $statusClass = match ((int) $message->status) {
+                                    0 => 'bg-yellow-100 text-yellow-900',
+                                    1 => 'bg-blue-100 text-blue-800',
+                                    default => 'bg-green-100 text-green-800',
+                                };
+                            @endphp
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                {{ $message->status === 'unread' ? 'bg-yellow-100 text-yellow-900' : 
-                                   ($message->status === 'read' ? 'bg-blue-100 text-blue-800' : 
-                                    'bg-green-100 text-green-800') }}">
-                                {{ ucfirst($message->status) }}
+                                {{ $statusClass }}">
+                                {{ $statusLabel }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $message->name }}</td>
@@ -72,5 +109,20 @@
   function filterMessages(status) {
     window.location.href = "{{ route('admin.contact-messages.index') }}?status=" + status;
     }
-    </script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectAll = document.getElementById('select-all-messages');
+        const checkboxes = document.querySelectorAll('.message-select-checkbox');
+
+        if (!selectAll) {
+            return;
+        }
+
+        selectAll.addEventListener('change', function () {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = selectAll.checked;
+            });
+        });
+    });
+</script>
 @endsection

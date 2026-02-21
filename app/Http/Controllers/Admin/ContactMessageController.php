@@ -10,18 +10,51 @@ use Illuminate\Support\Facades\Mail;
 
 class ContactMessageController extends Controller
 {
-  public function index(Request $request)
-  {
-      $query = ContactMessage::latest();
-      
-      if ($request->has('status') && $request->status !== '') {
-          $query->where('status', $request->status);
-      }
-      
-      $messages = $query->paginate(20);
-      
-      return view('admin.contact-messages.index', compact('messages'));
-  }
+    public function index(Request $request)
+    {
+        $query = ContactMessage::latest();
+
+        if ($request->has('status') && $request->status !== '') {
+            $query->where('status', (int) $request->status);
+        }
+
+        $messages = $query->paginate(20)->withQueryString();
+
+        return view('admin.contact-messages.index', compact('messages'));
+    }
+
+    public function massAction(Request $request)
+    {
+        $validated = $request->validate([
+            'selected_messages' => ['required', 'array', 'min:1'],
+            'selected_messages.*' => ['integer', 'exists:contact_messages,id'],
+            'action' => ['required', 'in:mark_unread,mark_read,mark_replied,delete'],
+        ]);
+
+        $selectedIds = collect($validated['selected_messages'])
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values()
+            ->all();
+
+        if ($validated['action'] === 'delete') {
+            ContactMessage::whereIn('id', $selectedIds)->delete();
+
+            return redirect()->route('admin.contact-messages.index')
+                ->with('success', 'Selected messages deleted.');
+        }
+
+        $status = match ($validated['action']) {
+            'mark_unread' => ContactMessage::STATUS_UNREAD,
+            'mark_read' => ContactMessage::STATUS_READ,
+            default => ContactMessage::STATUS_REPLIED,
+        };
+
+        ContactMessage::whereIn('id', $selectedIds)->update(['status' => $status]);
+
+        return redirect()->route('admin.contact-messages.index')
+            ->with('success', 'Selected messages updated.');
+    }
   
     
     public function show(int $id)
