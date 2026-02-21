@@ -55,7 +55,7 @@
                 Cancel
             </a>
             <button type="submit" 
-                    class="px-4 py-2 bg-lime-600 text-white rounded-lg hover:bg-lime-700">
+                    class="px-4 py-2 bg-lime-700 text-white rounded-lg hover:bg-lime-800">
                 Create Category
             </button>
         </div>

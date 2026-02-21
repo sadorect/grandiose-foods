@@ -5,31 +5,31 @@
     
     <nav class="space-y-2">
         <a href="{{ route('admin.dashboard') }}" 
-           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.dashboard') ? 'bg-lime-700' : '' }}">
+           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.dashboard') ? 'bg-lime-700' : '' }}">
             <span>Dashboard</span>
         </a>
-        <a href="{{ route('admin.hero-slides.index') }}" class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.hero-slides.*') ? 'bg-lime-700' : '' }}">
+        <a href="{{ route('admin.hero-slides.index') }}" class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.hero-slides.*') ? 'bg-lime-700' : '' }}">
     <span>Hero Slides</span>
     </a>
 
         <a href="{{ route('admin.categories.index') }}" 
-           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.categories.*') ? 'bg-lime-700' : '' }}">
+           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.categories.*') ? 'bg-lime-700' : '' }}">
             <span>Categories</span>
         </a>
         <a href="{{ route('admin.products.index') }}" 
-           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.products.*') ? 'bg-lime-700' : '' }}">
+           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.products.*') ? 'bg-lime-700' : '' }}">
             <span>Products</span>
         </a>
         <a href="{{ route('admin.orders.index') }}" 
-           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.orders.*') ? 'bg-lime-700' : '' }}">
+           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.orders.*') ? 'bg-lime-700' : '' }}">
             <span>Orders</span>
         </a>
         <a href="{{ route('admin.users.index') }}" 
-           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.users.*') ? 'bg-lime-700' : '' }}">
+           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.users.*') ? 'bg-lime-700' : '' }}">
             <span>Users</span>
         </a>
         <a href="{{ route('admin.contact-messages.index') }}" 
-           class="flex items-center justify-between text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.contact-messages.*') ? 'bg-lime-700' : '' }}">
+           class="flex items-center justify-between text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.contact-messages.*') ? 'bg-lime-700' : '' }}">
             <span>Messages</span>
             @php
                 $unreadCount = \App\Models\ContactMessage::where('status', 0)->count();
@@ -41,15 +41,15 @@
             @endif
         </a>
         <a href="{{ route('admin.settings') }}" 
-           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.settings') ? 'bg-lime-700' : '' }}">
+           class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.settings') ? 'bg-lime-700' : '' }}">
             <span>Settings</span>
         </a>
         <a href="{{ route('admin.backups.index') }}" 
-   class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.backups.*') ? 'bg-lime-700' : '' }}">
+   class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.backups.*') ? 'bg-lime-700' : '' }}">
     <span>Backups</span>
 </a>
 <a href="{{ route('admin.database.index') }}" 
-   class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-700 {{ request()->routeIs('admin.database.*') ? 'bg-lime-700' : '' }}">
+   class="flex items-center text-white py-2.5 px-4 rounded hover:bg-lime-800 {{ request()->routeIs('admin.database.*') ? 'bg-lime-700' : '' }}">
     <span>Database</span>
 </a>
 

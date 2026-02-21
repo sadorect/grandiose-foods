@@ -6,7 +6,7 @@
 <div class="bg-white rounded-lg shadow-md">
     <div class="p-6 flex justify-between items-center">
         <h3 class="text-lg font-semibold text-gray-800">All Categories</h3>
-        <a href="{{ route('admin.categories.create') }}" class="bg-lime-600 text-white px-4 py-2 rounded-lg hover:bg-lime-700">
+        <a href="{{ route('admin.categories.create') }}" class="bg-lime-700 text-white px-4 py-2 rounded-lg hover:bg-lime-800">
             Add New Category
         </a>
     </div>
@@ -33,11 +33,11 @@
                     <td class="px-6 py-4">{{ $category->products_count }}</td>
                     <td class="px-6 py-4 flex space-x-2">
                         <a href="{{ route('admin.categories.edit', $category) }}" 
-                           class="text-lime-600 hover:text-lime-700">Edit</a>
+                           class="text-lime-700 hover:text-lime-800">Edit</a>
                         <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-700" 
+                            <button type="submit" class="text-red-600 hover:text-red-800" 
                                     onclick="return confirm('Are you sure?')">Delete</button>
                         </form>
                     </td>

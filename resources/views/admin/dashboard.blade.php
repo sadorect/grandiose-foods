@@ -74,7 +74,7 @@
                     <td class="py-2">{{ $product->name }}</td>
                     <td>{{ $product->stock_quantity }}</td>
                     <td>
-                        <span class="px-2 py-1 text-xs rounded-full {{ $product->stock_quantity <= 10 ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800' }}">
+                        <span class="px-2 py-1 text-xs rounded-full {{ $product->stock_quantity <= 10 ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-900' }}">
                             {{ $product->stock_quantity <= 10 ? 'Critical' : 'Low' }}
                         </span>
                     </td>

@@ -39,7 +39,7 @@
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 rounded-full text-sm 
                             {{ $order->status === 'completed' ? 'bg-green-100 text-green-800' : 
-                               ($order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                               ($order->status === 'pending' ? 'bg-yellow-100 text-yellow-900' : 
                                ($order->status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800')) }}">
                             {{ ucfirst($order->status) }}
                         </span>
@@ -47,7 +47,7 @@
                     <td class="px-6 py-4">{{ $order->created_at->format('M d, Y') }}</td>
                     <td class="px-6 py-4">
                         <a href="{{ route('admin.orders.show', $order) }}" 
-                           class="text-lime-600 hover:text-lime-900">View Details</a>
+                           class="text-lime-700 hover:text-lime-900">View Details</a>
                            <!--form action="" 
                            method="POST" 
                            class="inline">

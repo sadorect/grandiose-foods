@@ -9,7 +9,7 @@
             <h2 class="text-xl font-semibold">Order #{{ $order->id }}</h2>
             <span class="px-3 py-1 rounded-full text-sm 
                 {{ $order->status === 'completed' ? 'bg-green-100 text-green-800' : 
-                   ($order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800') }}">
+                   ($order->status === 'pending' ? 'bg-yellow-100 text-yellow-900' : 'bg-gray-100 text-gray-800') }}">
                 {{ ucfirst($order->status) }}
             </span>
         </div>

@@ -59,7 +59,7 @@
                         <p class="text-lg font-medium">Total: ${{ number_format($cartItems->sum('subtotal'), 2) }}</p>
                     </div>
                     <a href="{{ route('checkout') }}" 
-                       class="bg-lime-600 text-white px-6 py-2 rounded-lg hover:bg-lime-700 transition">
+                       class="bg-lime-700 text-white px-6 py-2 rounded-lg hover:bg-lime-800 transition">
                         Proceed to Checkout
                     </a>
                 </div>
@@ -69,7 +69,7 @@
         <div class="text-center py-12">
             <p class="text-gray-500 mb-4">Your cart is empty</p>
             <a href="{{ route('products.index') }}" 
-               class="text-lime-600 hover:text-lime-700">
+               class="text-lime-700 hover:text-lime-800">
                 Continue Shopping →
             </a>
         </div>

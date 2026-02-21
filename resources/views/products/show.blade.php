@@ -3,7 +3,7 @@
 @section('content')
 <!-- Add this at the top of the page -->
 @if(session('success'))
-    <div id="notification" class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+    <div id="notification" class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded">
         {{ session('success') }}
     </div>
 @endif
@@ -12,9 +12,9 @@
     <!-- Breadcrumbs -->
     <nav class="flex mb-8" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
-            <li><a href="/" class="text-lime-600 hover:text-lime-700">Home</a></li>
+            <li><a href="/" class="text-lime-700 hover:text-lime-800">Home</a></li>
             <li><span class="mx-2">/</span></li>
-            <li><a href="{{ route('products.index') }}" class="text-lime-600 hover:text-lime-700">Products</a></li>
+            <li><a href="{{ route('products.index') }}" class="text-lime-700 hover:text-lime-800">Products</a></li>
             <li><span class="mx-2">/</span></li>
             <li class="text-gray-700">{{ $product->name }}</li>
         </ol>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-gray-600">Availability:</span>
-                    <span class="text-lime-600">{{ $product->stock_quantity > 0 ? 'In Stock' : 'Out of Stock' }}</span>
+                    <span class="text-lime-700">{{ $product->stock_quantity > 0 ? 'In Stock' : 'Out of Stock' }}</span>
                 </div>
             </div>
 
@@ -81,14 +81,14 @@
                                class="w-full rounded-lg border-gray-300 bg-yellow-200">
                     </div>
                     <button type="submit" 
-                            class="w-full bg-lime-600 text-white py-3 px-6 rounded-lg hover:bg-lime-700 transition">
+                            class="w-full bg-lime-700 text-white py-3 px-6 rounded-lg hover:bg-lime-800 transition">
                         Add to Cart
                     </button>
                 </form>
                 
                 <div class="flex items-end">
                     <a href="{{ route('cart.index') }}" 
-                       class="w-full bg-white text-lime-600 py-3 px-6 rounded-lg border border-lime-600 hover:bg-lime-50 transition text-center">
+                       class="w-full bg-white text-lime-700 py-3 px-6 rounded-lg border border-lime-600 hover:bg-lime-50 transition text-center">
                         Go to Cart
                     </a>
                 </div>
@@ -136,7 +136,7 @@
                                     
                                 </span>
                                 <a href="{{ route('products.show', $related) }}" 
-                                   class="text-lime-600 hover:text-lime-700">
+                                   class="text-lime-700 hover:text-lime-800">
                                     View →
                                 </a>
                             </div>
@@ -176,7 +176,7 @@
                 
                 // Show notification
                 const notification = document.createElement('div');
-                notification.className = 'fixed top-1/4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-50 shadow-lg';
+                notification.className = 'fixed top-1/4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded z-50 shadow-lg';
                 notification.textContent = data.message;
                 document.body.appendChild(notification);
                 

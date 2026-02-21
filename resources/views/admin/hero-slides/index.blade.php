@@ -5,7 +5,7 @@
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Hero Slides</h2>
         <a href="{{ route('admin.hero-slides.create') }}" 
-           class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+           class="bg-lime-700 text-white px-4 py-2 rounded-md hover:bg-lime-800">
             Add New Slide
         </a>
     </div>
@@ -39,14 +39,14 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <a href="{{ route('admin.hero-slides.edit', $slide) }}" 
-                               class="text-lime-600 hover:text-lime-700 mr-3">Edit</a>
+                               class="text-lime-700 hover:text-lime-800 mr-3">Edit</a>
                             <form action="{{ route('admin.hero-slides.destroy', $slide) }}" 
                                   method="POST" 
                                   class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" 
-                                        class="text-red-600 hover:text-red-700"
+                                        class="text-red-600 hover:text-red-800"
                                         onclick="return confirm('Are you sure?')">
                                     Delete
                                 </button>

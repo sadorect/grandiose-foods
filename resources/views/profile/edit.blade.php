@@ -10,18 +10,18 @@
                 <div class="border-b border-gray-200">
                     <nav class="flex -mb-px">
                         <button @click="activeTab = 'profile'" 
-                            :class="{ 'border-lime-600 text-lime-600': activeTab === 'profile', 'border-transparent': activeTab !== 'profile' }"
-                            class="px-6 py-4 border-b-2 font-medium hover:text-lime-600 transition">
+                            :class="{ 'border-lime-600 text-lime-700': activeTab === 'profile', 'border-transparent': activeTab !== 'profile' }"
+                            class="px-6 py-4 border-b-2 font-medium hover:text-lime-800 transition">
                             Profile Information
                         </button>
                         <button @click="activeTab = 'addresses'"
-                            :class="{ 'border-lime-600 text-lime-600': activeTab === 'addresses', 'border-transparent': activeTab !== 'addresses' }"
-                            class="px-6 py-4 border-b-2 font-medium hover:text-lime-600 transition">
+                            :class="{ 'border-lime-600 text-lime-700': activeTab === 'addresses', 'border-transparent': activeTab !== 'addresses' }"
+                            class="px-6 py-4 border-b-2 font-medium hover:text-lime-800 transition">
                             Shipping Addresses
                         </button>
                         <button @click="activeTab = 'orders'"
-                            :class="{ 'border-lime-600 text-lime-600': activeTab === 'orders', 'border-transparent': activeTab !== 'orders' }"
-                            class="px-6 py-4 border-b-2 font-medium hover:text-lime-600 transition">
+                            :class="{ 'border-lime-600 text-lime-700': activeTab === 'orders', 'border-transparent': activeTab !== 'orders' }"
+                            class="px-6 py-4 border-b-2 font-medium hover:text-lime-800 transition">
                             Order History
                         </button>
                     </nav>

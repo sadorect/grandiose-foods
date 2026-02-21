@@ -7,7 +7,7 @@
         </div>
 
         @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 text-sm font-medium text-lime-600">
+            <div class="mb-4 text-sm font-medium text-lime-700">
                 {{ __('A new verification link has been sent to the email address you provided during registration.') }}
             </div>
         @endif
@@ -15,7 +15,7 @@
         <div class="flex items-center justify-between mt-4">
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
-                <button type="submit" class="bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
+                <button type="submit" class="bg-lime-700 text-white py-2 px-4 rounded-lg hover:bg-lime-800 transition">
                     {{ __('Resend Verification Email') }}
                 </button>
             </form>

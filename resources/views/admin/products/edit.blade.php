@@ -155,7 +155,7 @@
                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200">
                     Cancel
                 </a>
-                <button type="submit" class="px-4 py-2 bg-lime-600 text-white rounded-md hover:bg-lime-700">
+                <button type="submit" class="px-4 py-2 bg-lime-700 text-white rounded-md hover:bg-lime-800">
                     Update Product
                 </button>
             </div>
@@ -203,7 +203,7 @@
                     class="mt-1 block w-full">
             </div>
             <button type="submit" 
-                    class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                    class="bg-lime-700 text-white px-4 py-2 rounded-md hover:bg-lime-800">
                 Upload Images
             </button>
             </form>

@@ -40,13 +40,13 @@
                 <x-input-error :messages="$errors->get('math_captcha_answer')" class="mt-2" />
             </div>
 
-            <button type="submit" class="w-full bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
+            <button type="submit" class="w-full bg-lime-700 text-white py-2 px-4 rounded-lg hover:bg-lime-800 transition">
                 Register
             </button>
 
             <p class="text-center text-sm text-gray-600">
                 Already have an account? 
-                <a href="{{ route('login') }}" class="text-lime-600 hover:text-lime-700">Login here</a>
+                <a href="{{ route('login') }}" class="text-lime-700 hover:text-lime-800">Login here</a>
             </p>
         </form>
     </div>

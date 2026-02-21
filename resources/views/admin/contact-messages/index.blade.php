@@ -35,7 +35,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                {{ $message->status === 'unread' ? 'bg-yellow-100 text-yellow-800' : 
+                                {{ $message->status === 'unread' ? 'bg-yellow-100 text-yellow-900' : 
                                    ($message->status === 'read' ? 'bg-blue-100 text-blue-800' : 
                                     'bg-green-100 text-green-800') }}">
                                 {{ ucfirst($message->status) }}
@@ -53,7 +53,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <a href="{{ route('admin.contact-messages.show', $message->id) }}" 
-                               class="text-lime-600 hover:text-lime-700 font-medium">
+                               class="text-lime-700 hover:text-lime-800 font-medium">
                                 View Details →
                             </a>
                         </td>

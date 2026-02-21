@@ -10,10 +10,10 @@
                 <h4 class="text-lg font-semibold text-lime-900 mb-4">Quick Links</h4>
                 <ul class="space-y-2">
                     @if(Route::has('products.index'))
-                        <li><a href="{{ route('products.index') }}" class="text-lime-800 hover:text-lime-700">Products</a></li>
+                        <li><a href="{{ route('products.index') }}" class="text-lime-800 hover:text-lime-800">Products</a></li>
                     @endif
                     @if(Route::has('contact'))
-                        <li><a href="{{ route('contact') }}" class="text-lime-800 hover:text-lime-700">Contact</a></li>
+                        <li><a href="{{ route('contact') }}" class="text-lime-800 hover:text-lime-800">Contact</a></li>
                     @endif
                 </ul>
             </div>

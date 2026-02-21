@@ -5,9 +5,9 @@
     <!-- Breadcrumbs -->
     <nav class="flex mb-8" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
-            <li><a href="/" class="text-lime-600 hover:text-lime-700">Home</a></li>
+            <li><a href="/" class="text-lime-700 hover:text-lime-800">Home</a></li>
             <li><span class="mx-2">/</span></li>
-            <li><a href="{{ route('categories.index') }}" class="text-lime-600 hover:text-lime-700">Categories</a></li>
+            <li><a href="{{ route('categories.index') }}" class="text-lime-700 hover:text-lime-800">Categories</a></li>
             <li><span class="mx-2">/</span></li>
             <li class="text-gray-700">{{ $category->name }}</li>
         </ol>
@@ -45,7 +45,7 @@
                     <div class="flex justify-between items-center mt-4">
                         
                         <a href="{{ route('products.show', $product) }}" 
-                           class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
+                           class="bg-lime-700 text-white px-4 py-2 rounded hover:bg-lime-800">
                             View Details
                         </a>
                     </div>

@@ -32,7 +32,7 @@
             :value="old('phone', $user->phone)" />
     </div>
 
-    <button type="submit" class="bg-lime-600 text-white px-4 py-2 rounded-lg hover:bg-lime-700 transition">
+    <button type="submit" class="bg-lime-700 text-white px-4 py-2 rounded-lg hover:bg-lime-800 transition">
         Save Changes
     </button>
 </form>

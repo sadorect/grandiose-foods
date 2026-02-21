@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="text-center mb-8">
-        <svg class="mx-auto h-16 w-16 text-lime-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="mx-auto h-16 w-16 text-lime-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <h1 class="mt-4 text-3xl font-bold text-lime-900">Order Confirmed!</h1>
@@ -48,7 +48,7 @@
 
     <div class="text-center mt-8">
         <a href="{{ route('products.index') }}" 
-           class="text-lime-600 hover:text-lime-700">
+           class="text-lime-700 hover:text-lime-800">
             Continue Shopping →
         </a>
     </div>

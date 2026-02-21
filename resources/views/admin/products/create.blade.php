@@ -152,7 +152,7 @@
             </div>
 
             <div class="flex justify-end">
-                <button type="submit" class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                <button type="submit" class="bg-lime-700 text-white px-4 py-2 rounded-md hover:bg-lime-800">
                     Create Product
                 </button>
             </div>

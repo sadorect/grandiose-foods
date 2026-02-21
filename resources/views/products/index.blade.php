@@ -8,7 +8,7 @@
     <!-- Breadcrumbs -->
     <nav class="text-lime-800 mb-8" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
-            <li><a href="/" class="hover:text-lime-700">Home</a></li>
+            <li><a href="/" class="hover:text-lime-800">Home</a></li>
             <li><span class="mx-2">/</span></li>
             <li class="font-semibold">Products</li>
         </ol>
@@ -58,7 +58,7 @@
                             
                         </span>
                         <a href="{{ route('products.show', $product) }}" 
-                           class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
+                           class="bg-lime-700 text-white px-4 py-2 rounded hover:bg-lime-800">
                             View Details
                         </a>
                     </div>

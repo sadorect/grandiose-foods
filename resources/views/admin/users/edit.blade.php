@@ -50,8 +50,16 @@
                     <div>
                         <label class="flex items-center">
                             <input type="checkbox" name="is_admin" value="1" {{ old('is_admin', $user->is_admin) ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-lime-600 shadow-sm focus:border-lime-500 focus:ring-lime-500">
+                                   class="rounded border-gray-300 text-lime-700 shadow-sm focus:border-lime-500 focus:ring-lime-500">
                             <span class="ml-2 text-sm text-gray-600">Admin privileges</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="is_active" value="1" {{ old('is_active', $user->is_active) ? 'checked' : '' }}
+                                   class="rounded border-gray-300 text-lime-700 shadow-sm focus:border-lime-500 focus:ring-lime-500">
+                            <span class="ml-2 text-sm text-gray-600">Active account</span>
                         </label>
                     </div>
 
@@ -59,7 +67,7 @@
                         <a href="{{ route('admin.users.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                             Cancel
                         </a>
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-lime-600 hover:bg-lime-700">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-lime-700 hover:bg-lime-800">
                             Update User
                         </button>
                     </div>
@@ -93,12 +101,12 @@
                                 <td class="px-6 py-4 whitespace-nowrap">${{ number_format($order->total, 2) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                        {{ $order->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                        {{ $order->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-900' }}">
                                         {{ ucfirst($order->status) }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="{{ route('admin.orders.show', $order) }}" class="text-lime-600 hover:text-lime-900">
+                                    <a href="{{ route('admin.orders.show', $order) }}" class="text-lime-700 hover:text-lime-900">
                                         View Details
                                     </a>
                                 </td>

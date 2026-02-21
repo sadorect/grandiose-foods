@@ -16,7 +16,7 @@
                     <div class="flex justify-between items-center">
                         <span class="text-gray-500">{{ $category->products_count }} Products</span>
                         <a href="{{ route('categories.show', $category) }}" 
-                           class="bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
+                           class="bg-lime-700 text-white px-4 py-2 rounded hover:bg-lime-800">
                             View Products
                         </a>
                     </div>

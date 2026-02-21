@@ -35,6 +35,15 @@ class AdminAuthController extends Controller
         }
 
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+            if (! Auth::user()->is_active) {
+                Auth::logout();
+                $this->incrementFailedAttempts($request);
+
+                throw ValidationException::withMessages([
+                    'email' => 'Your account is deactivated. Please contact support.',
+                ]);
+            }
+
             if (Auth::user()->is_admin) {
                 RateLimiter::clear($this->throttleKey($request));
                 $request->session()->regenerate();

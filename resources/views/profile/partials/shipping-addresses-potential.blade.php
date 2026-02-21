@@ -1,6 +1,6 @@
 <div class="space-y-6">
     @if (session('status'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+        <div class="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded relative">
             {{ session('status') }}
         </div>
     @endif
@@ -17,7 +17,7 @@
                     </div>
                     <div class="flex space-x-3">
                         <button onclick="editAddress({{ $address->id }})" 
-                                class="text-lime-600 hover:text-lime-700">
+                                class="text-lime-700 hover:text-lime-800">
                             Edit
                         </button>
                         <form action="{{ route('profile.addresses.destroy', $address) }}" 
@@ -26,7 +26,7 @@
                               class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-700">
+                            <button type="submit" class="text-red-600 hover:text-red-800">
                                 Remove
                             </button>
                         </form>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="flex space-x-4">
-            <button type="submit" class="bg-lime-600 text-white px-4 py-2 rounded-lg hover:bg-lime-700 transition">
+            <button type="submit" class="bg-lime-700 text-white px-4 py-2 rounded-lg hover:bg-lime-800 transition">
                 Save Address
             </button>
             <button type="button" 

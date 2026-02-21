@@ -40,6 +40,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->authenticate();
 
+        if (! Auth::user()->is_active) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Your account is deactivated. Please contact support.',
+            ]);
+        }
+
         $request->session()->regenerate();
 
         if (Auth::user()->is_admin) {

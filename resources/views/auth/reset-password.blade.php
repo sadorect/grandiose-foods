@@ -34,7 +34,7 @@
                 <x-input-error :messages="$errors->get('math_captcha_answer')" class="mt-2" />
             </div>
 
-            <button type="submit" class="w-full bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
+            <button type="submit" class="w-full bg-lime-700 text-white py-2 px-4 rounded-lg hover:bg-lime-800 transition">
                 Reset Password
             </button>
         </form>

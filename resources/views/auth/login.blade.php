@@ -21,12 +21,12 @@
 
             <div class="flex items-center justify-between">
                 <label class="inline-flex items-center">
-                    <input type="checkbox" name="remember" class="rounded border-gray-300 text-lime-600 focus:ring-lime-500">
+                    <input type="checkbox" name="remember" class="rounded border-gray-300 text-lime-700 focus:ring-lime-500">
                     <span class="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
 
                 @if (Route::has('password.request'))
-                    <a class="text-sm text-lime-600 hover:text-lime-700" href="{{ route('password.request') }}">
+                    <a class="text-sm text-lime-700 hover:text-lime-800" href="{{ route('password.request') }}">
                         Forgot password?
                     </a>
                 @endif
@@ -39,13 +39,13 @@
                 <x-input-error :messages="$errors->get('math_captcha_answer')" class="mt-2" />
             </div>
 
-            <button type="submit" class="w-full bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
+            <button type="submit" class="w-full bg-lime-700 text-white py-2 px-4 rounded-lg hover:bg-lime-800 transition">
                 Log in
             </button>
 
             <p class="text-center text-sm text-gray-600">
                 Don't have an account? 
-                <a href="{{ route('register') }}" class="text-lime-600 hover:text-lime-700">Register here</a>
+                <a href="{{ route('register') }}" class="text-lime-700 hover:text-lime-800">Register here</a>
             </p>
         </form>
     </div>

@@ -44,7 +44,7 @@
             </form>
             <!-- Add this right after the form -->
 <div id="security-alert" class="fixed top-4 right-4 transform transition-transform duration-300 translate-x-full">
-  <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-lg">
+  <div class="bg-red-100 border-l-4 border-red-500 text-red-800 p-4 rounded shadow-lg">
       <div class="flex items-center">
           <div class="flex-shrink-0">
               <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">

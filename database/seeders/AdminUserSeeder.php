@@ -10,11 +10,16 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
+        $admin = User::firstOrNew(['email' => 'admin@grandiosefoods.com']);
+
+        $admin->forceFill([
             'name' => 'Admin User',
-            'email' => 'admin@grandiosefoods.com',
             'password' => Hash::make('password'),
+            'phone' => '+1 443 200 0000',
+            'company_name' => 'Grandiose Foods',
+            'email_notifications' => true,
+            'email_verified_at' => now(),
             'is_admin' => true,
-        ]);
+        ])->save();
     }
 }

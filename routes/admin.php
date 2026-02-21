@@ -3,7 +3,6 @@
 use App\Http\Middleware\AdminAccess;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Middleware\AdminLoginRateLimiter;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\ProductController;
@@ -58,6 +57,7 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
     
     // Users
     Route::resource('users', UserController::class);
+    Route::post('users/mass-action', [UserController::class, 'massAction'])->name('users.mass-action');
 
 
     // Settings routes

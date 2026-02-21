@@ -52,13 +52,13 @@
             <div class="flex items-center">
                 <input type="checkbox" name="email_notifications" value="1" 
                        {{ $user->email_notifications ? 'checked' : '' }}
-                       class="rounded border-gray-300 text-lime-600">
+                       class="rounded border-gray-300 text-lime-700">
                 <label class="ml-2 text-sm text-gray-700">Receive email notifications</label>
             </div>
 
             <div class="flex justify-end">
                 <button type="submit" 
-                        class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                        class="bg-lime-700 text-white px-4 py-2 rounded-md hover:bg-lime-800">
                     Save Changes
                 </button>
             </div>
@@ -96,7 +96,7 @@
 
       <div class="flex justify-end">
           <button type="submit" 
-                  class="bg-lime-600 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                  class="bg-lime-700 text-white px-4 py-2 rounded-md hover:bg-lime-800">
               Update Password
           </button>
       </div>

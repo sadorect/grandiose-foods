@@ -23,12 +23,12 @@
                 <x-input-error :messages="$errors->get('math_captcha_answer')" class="mt-2" />
             </div>
 
-            <button type="submit" class="w-full bg-lime-600 text-white py-2 px-4 rounded-lg hover:bg-lime-700 transition">
+            <button type="submit" class="w-full bg-lime-700 text-white py-2 px-4 rounded-lg hover:bg-lime-800 transition">
                 Email Password Reset Link
             </button>
 
             <p class="text-center text-sm text-gray-600">
-                <a href="{{ route('login') }}" class="text-lime-600 hover:text-lime-700">
+                <a href="{{ route('login') }}" class="text-lime-700 hover:text-lime-800">
                     Back to login
                 </a>
             </p>

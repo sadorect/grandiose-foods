@@ -14,7 +14,7 @@
                             @if($order->status === 'delivered') bg-green-100 text-green-800
                             @elseif($order->status === 'processing') bg-blue-100 text-blue-800
                             @elseif($order->status === 'cancelled') bg-red-100 text-red-800
-                            @else bg-yellow-100 text-yellow-800
+                            @else bg-yellow-100 text-yellow-900
                             @endif">
                             {{ ucfirst($order->status) }}
                         </span>
@@ -70,12 +70,12 @@
                         </div>
                         <div class="flex space-x-4">
                             <button onclick="window.location='{{ route('orders.show', $order) }}'"
-                                    class="text-lime-600 hover:text-lime-700">
+                                    class="text-lime-700 hover:text-lime-800">
                                 View Details
                             </button>
                             <button onclick="reorderItems({{ $order->id }})"
                                 type="button"
-                                class="text-lime-600 hover:text-lime-700">
+                                class="text-lime-700 hover:text-lime-800">
                             Reorder
                         </button>
                         
@@ -87,7 +87,7 @@
             <div class="text-center py-8">
                 <p class="text-gray-500">No orders found</p>
                 <a href="{{ route('products.index') }}" 
-                   class="mt-4 inline-block text-lime-600 hover:text-lime-700">
+                   class="mt-4 inline-block text-lime-700 hover:text-lime-800">
                     Start Shopping →
                 </a>
             </div>

@@ -6,7 +6,7 @@
 <div class="bg-white rounded-lg shadow-md p-6 max-w-4xl mx-auto">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Message Details</h2>
-        <a href="{{ route('admin.contact-messages.index') }}" class="text-lime-600 hover:text-lime-700">
+        <a href="{{ route('admin.contact-messages.index') }}" class="text-lime-700 hover:text-lime-800">
             ← Back to Messages
         </a>
     </div>
@@ -28,7 +28,7 @@
             <div>
                 <p class="text-gray-600">Status:</p>
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                    {{ $message->status === 'unread' ? 'bg-yellow-100 text-yellow-800' : 
+                    {{ $message->status === 'unread' ? 'bg-yellow-100 text-yellow-900' : 
                        ($message->status === 'read' ? 'bg-blue-100 text-blue-800' : 
                         'bg-green-100 text-green-800') }}">
                     {{ ucfirst($message->status) }}
@@ -60,7 +60,7 @@
                 ></textarea>
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="bg-lime-600 text-white px-6 py-2 rounded-lg hover:bg-lime-700 transition duration-200">
+                <button type="submit" class="bg-lime-700 text-white px-6 py-2 rounded-lg hover:bg-lime-800 transition duration-200">
                     Send Reply
                 </button>
             </div>

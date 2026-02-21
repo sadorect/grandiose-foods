@@ -99,7 +99,7 @@
                         <input type="radio" 
                             name="shipping_address_id" 
                             value="{{ $address->id }}" 
-                            class="mt-1 rounded-full border-gray-300 text-lime-600 focus:ring-lime-500">
+                            class="mt-1 rounded-full border-gray-300 text-lime-700 focus:ring-lime-500">
                         <span class="text-sm">
                             <strong>{{ $address->label }}</strong><br>
                             {{ $address->street }}<br>
@@ -115,7 +115,7 @@
                     <input type="radio" 
                         name="shipping_address_id" 
                         value="new" 
-                        class="mt-1 rounded-full border-gray-300 text-lime-600 focus:ring-lime-500">
+                        class="mt-1 rounded-full border-gray-300 text-lime-700 focus:ring-lime-500">
                     <span class="text-sm font-medium">Use a new address</span>
                 </label>
             </div>
@@ -165,7 +165,7 @@
         <!-- Place Order Button -->
         <div class="mt-8">
             <button type="submit" 
-                    class="w-full bg-lime-600 text-white py-3 px-6 rounded-lg hover:bg-lime-700 transition">
+                    class="w-full bg-lime-700 text-white py-3 px-6 rounded-lg hover:bg-lime-800 transition">
                 Place Order
             </button>
         </div>
