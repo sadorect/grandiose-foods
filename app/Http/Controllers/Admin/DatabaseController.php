@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class DatabaseController extends Controller
 {
+    private function databaseConsoleEnabled(): bool
+    {
+        return app()->environment(['local', 'testing']) || (bool) config('app.admin_database_console_enabled', false);
+    }
+
     public function index()
     {
-        abort_unless(app()->environment(['local', 'testing']), 403, 'Database console is disabled in this environment.');
+        abort_unless($this->databaseConsoleEnabled(), 403, 'Database console is disabled in this environment.');
 
         $tables = DB::select('SHOW TABLES');
         return view('admin.database.index', compact('tables'));
@@ -18,7 +23,7 @@ class DatabaseController extends Controller
 
     public function executeQuery(Request $request)
     {
-        abort_unless(app()->environment(['local', 'testing']), 403, 'Database console is disabled in this environment.');
+        abort_unless($this->databaseConsoleEnabled(), 403, 'Database console is disabled in this environment.');
 
         $validated = $request->validate([
             'query' => ['required', 'string', 'max:5000'],

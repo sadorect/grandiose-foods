@@ -122,6 +122,9 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'admin_database_console_enabled' => (bool) env('ADMIN_DATABASE_CONSOLE_ENABLED', false),
+
     'providers' => [
         // Laravel Framework Service Providers
         Illuminate\Auth\AuthServiceProvider::class,

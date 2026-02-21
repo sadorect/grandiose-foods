@@ -67,22 +67,32 @@ public function index()
     public function create()
 {
     try {
-        // Force the backup process to run in foreground
         Log::info('Starting backup process...');
-        $output = Artisan::call('backup:run', [
+            $exitCode = Artisan::call('backup:run', [
             '--only-db' => true,
             '--disable-notifications' => true
         ]);
-        Log::info('Backup completed');
-        Log::info(Artisan::output());
+
+            $commandOutput = trim(Artisan::output());
+
+            if ($exitCode !== 0) {
+                Log::error('Backup command failed', [
+                    'exit_code' => $exitCode,
+                    'output' => $commandOutput,
+                ]);
+
+                return redirect()->back()->with('error', 'Backup failed. Please check server logs for details.');
+            }
+
+            Log::info('Backup completed', ['output' => $commandOutput]);
         
         return redirect()->back()->with([
             'success' => 'Backup created successfully',
-            'output' => Artisan::output()
+                'output' => $commandOutput
         ]);
     } catch (\Exception $e) {
         Log::error('Backup failed: ' . $e->getMessage());
-        return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('error', 'Backup failed. Please check server logs for details.');
     }
 }
 
